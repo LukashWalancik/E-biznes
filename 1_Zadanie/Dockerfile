@@ -18,4 +18,15 @@ RUN rm -r Python*
 
 WORKDIR /
 
-CMD /bin/bash
+
+# Podpunkt 2
+RUN apt update
+RUN apt install -y openjdk-8-jdk wget unzip
+
+WORKDIR /opt
+RUN wget https://github.com/JetBrains/kotlin/releases/download/v2.1.20/kotlin-compiler-2.1.20.zip
+RUN unzip kotlin-compiler-2.1.20.zip
+RUN rm -f kotlin-compiler-2.1.20.zip
+
+ENV PATH="$PATH:/opt/kotlinc/bin"
+WORKDIR /
