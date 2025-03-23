@@ -30,3 +30,20 @@ RUN rm -f kotlin-compiler-2.1.20.zip
 
 ENV PATH="$PATH:/opt/kotlinc/bin"
 WORKDIR /
+
+# Podpunkt 3
+WORKDIR  /opt
+RUN wget https://services.gradle.org/distributions/gradle-8.13-bin.zip
+RUN unzip gradle-8.13-bin.zip
+RUN rm -f gradle-8.13-bin.zip
+
+ENV PATH="$PATH:/opt/gradle-8.13/bin"
+WORKDIR /
+
+WORKDIR /app
+RUN mkdir Gradle
+COPY Gradle /app/Gradle
+WORKDIR /app/Gradle
+RUN gradle build
+
+WORKDIR /
