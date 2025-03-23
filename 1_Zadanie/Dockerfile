@@ -46,4 +46,5 @@ COPY Gradle /app/Gradle
 WORKDIR /app/Gradle
 RUN gradle build
 
-WORKDIR /
+# Podpunkt 4?
+CMD ["gradle", "run"]
