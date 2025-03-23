@@ -1,0 +1,5 @@
+services:
+  aplikacja:
+    build: .
+    container_name: zadanie_1
+    command: ["gradle", "run"]
