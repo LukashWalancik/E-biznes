@@ -4,21 +4,17 @@ import play.api.mvc._
 import play.api.libs.json._
 import javax.inject._
 import scala.collection.mutable.ListBuffer
-
-case class Product(id: Int, name: String, price: Double)
-
-object Product {
-  implicit val productFormat: OFormat[Product] = Json.format[Product]
-}
-
+import models.Product
 
 @Singleton
 class ProductController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   private val products = ListBuffer(
-    Product(1, "Laptop", 3000.0),
-    Product(2, "Smartphone", 2000.0),
-    Product(3, "Tablet", 1500.0)
+    Product(1, "Laptop", 3000.0, 1),  // Elektronika
+    Product(2, "Smartphone", 2000.0, 1),  // Elektronika
+    Product(3, "Tablet", 1500.0, 1),  // Elektronika
+    Product(4, "Telewizor", 2500.0, 2),  // RTV
+    Product(5, "Lodówka", 5000.0, 3) // AGD
   )
 
   def getAll = Action {
@@ -30,6 +26,11 @@ class ProductController @Inject()(cc: ControllerComponents) extends AbstractCont
       case Some(product) => Ok(Json.toJson(product))
       case None => NotFound(Json.obj("error" -> "Product not found"))
     }
+  }
+
+  def getByCategory(categoryId: Int) = Action {
+    val filteredProducts = products.filter(_.categoryId == categoryId)
+    Ok(Json.toJson(filteredProducts))
   }
 
   def add = Action(parse.json) { request =>
