@@ -44,7 +44,7 @@ irm "http://localhost:9000/products/4" -Method DELETE
 # KOSZYK
 # POST
 irm -Uri "http://localhost:9000/cart" -Method Post -Headers @{"Content-Type"="application/json"} -Body '{"productId": 1, "quantity": 2}'
-
+irm -Uri "http://localhost:9000/cart" -Method Post -Headers @{"Content-Type"="application/json"} -Body '{"productId": 2, "quantity": 1}'
 
 # POST
 irm "http://localhost:9000/cart" `

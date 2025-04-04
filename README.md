@@ -13,4 +13,13 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 4.5 stworzyć przykład typu HelloWorld oraz uruchomienie aplikacji przez CMD oraz gradle [Commit](https://github.com/LukashWalancik/E-biznes/commit/a864d484992209d3b87d47ef167a2afc1dfc4e17)  
 ✅ 5.0 dodać konfigurację docker-compose [Commit](https://github.com/LukashWalancik/E-biznes/commit/7f19387fed63c7d0bd5ce6109b0f9ce3b849dacd)  
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/1_Zadanie)
-### ![Demo](Dema/E-Biznes_Docker.mkv)
+### [![Demo](Dema/E-Biznes_Docker.mkv)]
+
+## Zadanie 2 Scala
+✅ 3.0 Należy stworzyć kontroler do Produktów [Commit](https://github.com/LukashWalancik/E-biznes/commit/13344295d8a942ffea61c8adbf85331a00602bec)  
+✅ 3.5 Do kontrolera należy stworzyć endpointy zgodnie z CRUD - dane pobierane z listy [Commit](https://github.com/LukashWalancik/E-biznes/commit/24ea8c32b28516668d99f67a7ae8295eb43d0f83)  
+✅ 4.0 Należy stworzyć kontrolery do Kategorii oraz Koszyka + endpointy zgodnie z CRUD [Commit](https://github.com/LukashWalancik/E-biznes/commit/0dfe90e82c8a6d6d3063670c476fe71337a8702b)  
+❌ 4.5 Należy aplikację uruchomić na dockerze (stworzyć obraz) oraz dodać skrypt uruchamiający aplikację via ngrok  
+❌ 5.0 Należy dodać konfigurację CORS dla dwóch hostów dla metod CRUD
+### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/Scala/produkty)
+### ![Demo](Dema/E-Biznes_Scala.mkv)
