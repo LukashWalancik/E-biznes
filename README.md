@@ -14,6 +14,3 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 5.0 dodać konfigurację docker-compose [Commit](https://github.com/LukashWalancik/E-biznes/commit/7f19387fed63c7d0bd5ce6109b0f9ce3b849dacd)  
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/1_Zadanie)
 ### ![Alt text](Dema/E-Biznes_Docker.mp4)
-
-https://github.com/user-attachments/assets/07bc4962-e35c-4efb-8851-cc5e7010254e
-
