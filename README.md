@@ -13,3 +13,4 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 4.5 stworzyć przykład typu HelloWorld oraz uruchomienie aplikacji przez CMD oraz gradle [Commit](https://github.com/LukashWalancik/E-biznes/commit/a864d484992209d3b87d47ef167a2afc1dfc4e17)  
 ✅ 5.0 dodać konfigurację docker-compose [Commit](https://github.com/LukashWalancik/E-biznes/commit/7f19387fed63c7d0bd5ce6109b0f9ce3b849dacd)  
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/1_Zadanie)
+### [Demo](Dema/E-Biznes_Docker.mkv)
