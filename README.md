@@ -23,3 +23,12 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ❌ 5.0 Należy dodać konfigurację CORS dla dwóch hostów dla metod CRUD
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/Scala/produkty)
 ### ![Demo](Dema/E-Biznes_Scala.mkv)
+
+## Zadanie 3 Kotlin
+✅ 3.0 Należy stworzyć aplikację kliencką w Kotlinie we frameworku Ktor,która pozwala na przesyłanie wiadomości na platformę Discord [Commit](https://github.com/LukashWalancik/E-biznes/commit/38e8b29bdb753c59cfef1c4730ad7b4a1af71229)  
+✅ 3.5 Aplikacja jest w stanie odbierać wiadomości użytkowników z platformy Discord skierowane do aplikacji (bota) [Commit](https://github.com/LukashWalancik/E-biznes/commit/38e8b29bdb753c59cfef1c4730ad7b4a1af71229)  
+✅ 4.0 Zwróci listę kategorii na określone żądanie użytkownika [Commit](https://github.com/LukashWalancik/E-biznes/commit/38e8b29bdb753c59cfef1c4730ad7b4a1af71229)  
+✅ 4.5 Zwróci listę produktów wg żądanej kategorii [Commit](https://github.com/LukashWalancik/E-biznes/commit/38e8b29bdb753c59cfef1c4730ad7b4a1af71229)  
+❌ 5.0 Aplikacja obsłuży dodatkowo jedną z platform: Slack, Messenger, Webex
+### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/Kotlin)
+### ![Demo](Dema/E-Biznes_Kotlin.mkv)
