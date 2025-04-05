@@ -4,19 +4,20 @@ import dev.kord.core.on
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 
+
+val kategorie = listOf("Historyczne", "Fantastyka", "Kryminały", "Literatura piękna")
+
+val ksiazki = mapOf(
+    "Historyczne" to listOf("Europa. Rozprawa historyka z historią", "Boże Igrzysko", "Quo Vadis"),
+    "Fantastyka" to listOf("Wiedźmin", "Kroniki Czarnej Kompanii", "Droga Królów", "Z Mgły Zrodzony"),
+    "Kryminały" to listOf("Niewierni", "Nielegalni", "Sherlock Holmes"),
+    "Literatura piękna" to listOf("Przeminęło z wiatrem", "Sto lat samotności", "Egipcjanin Sinuhe")
+)
+
+
 suspend fun main() {
     val token = System.getenv("DISCORD_BOT_TOKEN")
-    print(token)
     val kord = Kord(token)
-    val kategorie = listOf("Historyczne", "Fantastyka", "Kryminały", "Literatura piękna")
-
-    val ksiazki = mapOf(
-        "Historyczne" to listOf("Europa. Rozprawa historyka z historią", "Boże Igrzysko", "Quo Vadis"),
-        "Fantastyka" to listOf("Wiedźmin", "Kroniki Czarnej Kompanii", "Droga Królów", "Z Mgły Zrodzony"),
-        "Kryminały" to listOf("Niewierni", "Nielegalni", "Sherlock Holmes"),
-        "Literatura piękna" to listOf("Przeminęło z wiatrem", "Sto lat samotności", "Egipcjanin Sinuhe")
-    )
-
 
     kord.on<MessageCreateEvent> {
         if (message.author?.isBot != false) return@on
@@ -59,12 +60,9 @@ suspend fun main() {
         }
     }
 
-
     kord.login {
         // we need to specify this to receive the content of messages
         @OptIn(PrivilegedIntent::class)
         intents += Intent.MessageContent
     }
-
-
 }

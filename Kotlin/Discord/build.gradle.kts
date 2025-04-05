@@ -16,9 +16,10 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("dev.kord:kord-core:0.15.0")
-    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    implementation("com.slack.api:bolt:1.18.0")
+    implementation("com.slack.api:bolt-jetty:1.18.0")
+    implementation("com.slack.api:slack-api-client-kotlin-extension:1.18.0")
 }
-
 tasks.test {
     useJUnitPlatform()
 }
