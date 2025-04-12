@@ -69,7 +69,7 @@ func SeedBooks(c echo.Context) error {
 		{Title: "Sto lat samotnosci", Author: "Gabriel Garcia Marquez", Price: 69.90},
 		{Title: "Nexus", Author: "Yuval Noah Harari", Price: 46.99},
 		{Title: "Ogniem i mieczem", Author: "Henryk Sienkiewicz", Price: 37.99},
-		{Title: "Potop", Author: "Henryk Sienkiewicz", Price: 31.99},
+		{Title: "Potop", Author: "Henryk Sienkiewicz", Price: 32.99},
 		{Title: "Pan Wolodyjowski", Author: "Henryk Sienkiewicz", Price: 41.77},
 	}
 
