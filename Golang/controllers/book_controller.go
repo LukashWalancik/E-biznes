@@ -2,86 +2,81 @@
 package controllers
 
 import (
-	"fmt"
+	"ebiznes/models"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
-type Book struct {
-	ID     int    `json:"id"`
-	Title  string `json:"title"`
-	Author string `json:"author"`
-}
-
-var books = []Book{
-	{ID: 1, Title: "Władca Pierścieni", Author: "J.R.R. Tolkien"},
-	{ID: 2, Title: "Sto lat samotności", Author: "Gabriel García Márquez"},
-	{ID: 3, Title: "Nexus", Author: "Yuval Noah Harari"},
-	{ID: 4, Title: "Ogniem i mieczem", Author: "Henryk Sienkiewicz"},
-	{ID: 5, Title: "Potop", Author: "Henryk Sienkiewicz"},
-	{ID: 6, Title: "Pan Wołodyjowski", Author: "Henryk Sienkiewicz"},
-}
-
 func GetBooks(c echo.Context) error {
+	books, err := models.GetBooks()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, "Error retrieving books")
+	}
 	return c.JSON(http.StatusOK, books)
 }
 
 func GetBook(c echo.Context) error {
-	idParam := c.Param("id")
-	for _, b := range books {
-		if fmt.Sprintf("%d", b.ID) == idParam {
-			return c.JSON(http.StatusOK, b)
-		}
+	id := c.Param("id")
+	book, err := models.GetBookByID(id)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Book not found")
 	}
-	return c.JSON(http.StatusNotFound, echo.Map{"message": "Book not found"})
+	return c.JSON(http.StatusOK, book)
 }
 
 func CreateBook(c echo.Context) error {
-	var newBook Book
-	if err := c.Bind(&newBook); err != nil {
-		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid input"})
+	var book models.Book
+	if err := c.Bind(&book); err != nil {
+		return c.JSON(http.StatusBadRequest, "Invalid input")
 	}
-
-	newBook.ID = getNextID()
-	books = append(books, newBook)
-
-	return c.JSON(http.StatusCreated, newBook)
-}
-
-func getNextID() int {
-	maxID := 0
-	for _, b := range books {
-		if b.ID > maxID {
-			maxID = b.ID
-		}
+	if err := models.CreateBook(&book); err != nil {
+		return c.JSON(http.StatusInternalServerError, "Error creating book")
 	}
-	return maxID + 1
+	return c.JSON(http.StatusCreated, book)
 }
 
 func UpdateBook(c echo.Context) error {
-	idParam := c.Param("id")
-	for i, b := range books {
-		if fmt.Sprintf("%d", b.ID) == idParam {
-			var updated Book
-			if err := c.Bind(&updated); err != nil {
-				return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid input"})
-			}
-			updated.ID = b.ID // zachowaj stare ID
-			books[i] = updated
-			return c.JSON(http.StatusOK, updated)
-		}
+	id := c.Param("id")
+	var updatedBook models.Book
+	if err := c.Bind(&updatedBook); err != nil {
+		return c.JSON(http.StatusBadRequest, "Invalid input")
 	}
-	return c.JSON(http.StatusNotFound, echo.Map{"message": "Book not found"})
+	if err := models.UpdateBook(id, &updatedBook); err != nil {
+		return c.JSON(http.StatusInternalServerError, "Error updating book")
+	}
+	return c.JSON(http.StatusOK, updatedBook)
 }
 
 func DeleteBook(c echo.Context) error {
-	idParam := c.Param("id")
-	for i, b := range books {
-		if fmt.Sprintf("%d", b.ID) == idParam {
-			books = append(books[:i], books[i+1:]...)
-			return c.JSON(http.StatusOK, echo.Map{"message": "Book deleted"})
+	id := c.Param("id")
+	if err := models.DeleteBook(id); err != nil {
+		return c.JSON(http.StatusInternalServerError, "Error deleting book")
+	}
+	return c.JSON(http.StatusOK, "Book deleted successfully")
+}
+
+func ClearBooks(c echo.Context) error {
+	if err := models.ClearBooks(); err != nil {
+		return c.JSON(http.StatusInternalServerError, "Error clearing books")
+	}
+	return c.JSON(http.StatusOK, "All books have been cleared")
+}
+
+func SeedBooks(c echo.Context) error {
+	books := []models.Book{
+		{Title: "Druzyna Pierscienia", Author: "J.R.R. Tolkien"},
+		{Title: "Sto lat samotnosci", Author: "Gabriel Garcia Marquez"},
+		{Title: "Nexus", Author: "Yuval Noah Harari"},
+		{Title: "Ogniem i mieczem", Author: "Henryk Sienkiewicz"},
+		{Title: "Potop", Author: "Henryk Sienkiewicz"},
+		{Title: "Pan Wolodyjowski", Author: "Henryk Sienkiewicz"},
+	}
+
+	for _, book := range books {
+		if err := models.CreateBook(&book); err != nil {
+			return c.JSON(http.StatusInternalServerError, "Error seeding books")
 		}
 	}
-	return c.JSON(http.StatusNotFound, echo.Map{"message": "Book not found"})
+	return c.JSON(http.StatusOK, "Books have been seeded")
 }
