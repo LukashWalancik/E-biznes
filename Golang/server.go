@@ -23,6 +23,12 @@ func main() {
 	e.DELETE("/books/clear", controllers.ClearBooks)
 	e.POST("/books/seed", controllers.SeedBooks)
 
+	e.POST("/cart/:book_id/:quantity", controllers.AddBookToCart)
+	e.GET("/cart", controllers.GetCart)
+	e.GET("/cart/totalprice", controllers.GetTotalPrice)
+	e.PUT("/cart/:cart_id/:new_quantity", controllers.UpdateCartItem)
+	e.DELETE("/cart/:cart_id", controllers.DeleteCartItem)
+
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello from Bookstore API!")
 	})

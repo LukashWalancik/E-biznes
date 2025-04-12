@@ -1,27 +1,11 @@
 // book_model.go
 package models
 
-import (
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-)
-
-// Book - model książki
 type Book struct {
-	ID     uint   `json:"id"`
-	Title  string `json:"title"`
-	Author string `json:"author"`
-}
-
-var DB *gorm.DB
-
-func Initialize() {
-	var err error
-	DB, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-	DB.AutoMigrate(&Book{})
+	ID     uint    `json:"id"`
+	Title  string  `json:"title"`
+	Author string  `json:"author"`
+	Price  float64 `json:"price"`
 }
 
 func GetBooks() ([]Book, error) {
@@ -51,6 +35,7 @@ func UpdateBook(id string, updatedBook *Book) error {
 	}
 	book.Title = updatedBook.Title
 	book.Author = updatedBook.Author
+	book.Price = updatedBook.Price
 	return DB.Save(&book).Error
 }
 

@@ -65,12 +65,12 @@ func ClearBooks(c echo.Context) error {
 
 func SeedBooks(c echo.Context) error {
 	books := []models.Book{
-		{Title: "Druzyna Pierscienia", Author: "J.R.R. Tolkien"},
-		{Title: "Sto lat samotnosci", Author: "Gabriel Garcia Marquez"},
-		{Title: "Nexus", Author: "Yuval Noah Harari"},
-		{Title: "Ogniem i mieczem", Author: "Henryk Sienkiewicz"},
-		{Title: "Potop", Author: "Henryk Sienkiewicz"},
-		{Title: "Pan Wolodyjowski", Author: "Henryk Sienkiewicz"},
+		{Title: "Dwie Wieze", Author: "J.R.R. Tolkien", Price: 51.99},
+		{Title: "Sto lat samotnosci", Author: "Gabriel Garcia Marquez", Price: 69.90},
+		{Title: "Nexus", Author: "Yuval Noah Harari", Price: 46.99},
+		{Title: "Ogniem i mieczem", Author: "Henryk Sienkiewicz", Price: 37.99},
+		{Title: "Potop", Author: "Henryk Sienkiewicz", Price: 31.99},
+		{Title: "Pan Wolodyjowski", Author: "Henryk Sienkiewicz", Price: 41.77},
 	}
 
 	for _, book := range books {
