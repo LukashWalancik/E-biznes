@@ -3,7 +3,11 @@ irm "http://localhost:1323/books" -Method GET
 irm "http://localhost:1323/books/[ID]" -Method GET
 irm "http://localhost:1323/books/4" -Method GET
 
+irm "http://localhost:1323/books/filtered?category_id=1" -Method GET
+irm "http://localhost:1323/books/filtered?author=J.R.R.%20Tolkien" -Method GET
+irm "http://localhost:1323/books/filtered?max_price=50" -Method GET
 
+irm "http://localhost:1323/books/filtered?author=Henryk%20Sienkiewicz&max_price=40" -Method GET
 
 # POST
 irm "http://localhost:1323/books" -Method POST -ContentType "application/json" -Body '{"title": "TYTUŁ", "author": "AUTOR", "price": "CENA"}' -Headers @{"Content-Type"="application/json"}

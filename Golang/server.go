@@ -22,7 +22,7 @@ func main() {
 	e.GET("/books/category/:category_id", controllers.GetBooksByCategory)
 	e.DELETE("/books/clear", controllers.ClearBooks)
 	e.POST("/books/seed", controllers.SeedBooks)
-
+	e.GET("/books/filtered", controllers.GetFilteredBooks)
 	// cart
 	e.POST("/cart/:book_id/:quantity", controllers.AddBookToCart)
 	e.GET("/cart", controllers.GetCart)

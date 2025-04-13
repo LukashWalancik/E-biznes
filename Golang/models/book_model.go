@@ -1,6 +1,8 @@
 // book_model.go
 package models
 
+import "gorm.io/gorm"
+
 type Book struct {
 	ID         uint     `json:"id"`
 	Title      string   `json:"title"`
@@ -56,4 +58,45 @@ func DeleteBook(id string) error {
 
 func ClearBooks() error {
 	return DB.Exec("DELETE FROM books").Error
+}
+
+// Scope: filtruj po kategorii
+func ByCategory(categoryID uint) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		return db.Where("category_id = ?", categoryID)
+	}
+}
+
+// Scope: filtruj po autorze
+func ByAuthor(author string) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		return db.Where("author = ?", author)
+	}
+}
+
+// Scope: filtruj książki tańsze niż
+func CheaperThan(price float64) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		return db.Where("price < ?", price)
+	}
+}
+
+func GetFilteredBooks(categoryID *uint, author *string, maxPrice *float64) ([]Book, error) {
+	var books []Book
+	query := DB.Model(&Book{})
+
+	if categoryID != nil {
+		query = query.Scopes(ByCategory(*categoryID))
+	}
+	if author != nil {
+		query = query.Scopes(ByAuthor(*author))
+	}
+	if maxPrice != nil {
+		query = query.Scopes(CheaperThan(*maxPrice))
+	}
+
+	if err := query.Find(&books).Error; err != nil {
+		return nil, err
+	}
+	return books, nil
 }

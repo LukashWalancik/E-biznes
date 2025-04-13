@@ -103,3 +103,32 @@ func SeedBooks(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, "Books have been seeded")
 }
+
+func GetFilteredBooks(c echo.Context) error {
+	var categoryID *uint
+	var author *string
+	var maxPrice *float64
+
+	if cid := c.QueryParam("category_id"); cid != "" {
+		if parsed, err := strconv.Atoi(cid); err == nil {
+			id := uint(parsed)
+			categoryID = &id
+		}
+	}
+
+	if a := c.QueryParam("author"); a != "" {
+		author = &a
+	}
+
+	if p := c.QueryParam("max_price"); p != "" {
+		if parsed, err := strconv.ParseFloat(p, 64); err == nil {
+			maxPrice = &parsed
+		}
+	}
+
+	books, err := models.GetFilteredBooks(categoryID, author, maxPrice)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, "Error retrieving filtered books")
+	}
+	return c.JSON(http.StatusOK, books)
+}
