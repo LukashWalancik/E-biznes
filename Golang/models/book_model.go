@@ -2,10 +2,12 @@
 package models
 
 type Book struct {
-	ID     uint    `json:"id"`
-	Title  string  `json:"title"`
-	Author string  `json:"author"`
-	Price  float64 `json:"price"`
+	ID         uint     `json:"id"`
+	Title      string   `json:"title"`
+	Author     string   `json:"author"`
+	Price      float64  `json:"price"`
+	CategoryID uint     `json:"category_id"`
+	Category   Category `json:"category" gorm:"foreignKey:CategoryID"`
 }
 
 func GetBooks() ([]Book, error) {
@@ -24,6 +26,14 @@ func GetBookByID(id string) (*Book, error) {
 	return &book, nil
 }
 
+func GetBooksByCategory(categoryID uint) ([]Book, error) {
+	var books []Book
+	if err := DB.Where("category_id = ?", categoryID).Find(&books).Error; err != nil {
+		return nil, err
+	}
+	return books, nil
+}
+
 func CreateBook(book *Book) error {
 	return DB.Create(book).Error
 }
@@ -36,6 +46,7 @@ func UpdateBook(id string, updatedBook *Book) error {
 	book.Title = updatedBook.Title
 	book.Author = updatedBook.Author
 	book.Price = updatedBook.Price
+	book.CategoryID = updatedBook.CategoryID
 	return DB.Save(&book).Error
 }
 

@@ -1,4 +1,4 @@
-// models/initialize.go (lub inny plik w models)
+// models/initialize.go
 package models
 
 import (
@@ -8,7 +8,6 @@ import (
 
 var DB *gorm.DB
 
-// Initialize - funkcja inicjalizująca bazę danych
 func Initialize() {
 	var err error
 	DB, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
@@ -16,8 +15,7 @@ func Initialize() {
 		panic("failed to connect database")
 	}
 
-	// Automatyczna migracja dla modeli Book i Cart
-	err = DB.AutoMigrate(&Book{}, &Cart{})
+	err = DB.AutoMigrate(&Category{}, &Book{}, &Cart{})
 	if err != nil {
 		panic("failed to migrate tables")
 	}

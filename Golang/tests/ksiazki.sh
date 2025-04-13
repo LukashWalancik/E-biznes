@@ -10,6 +10,8 @@ irm "http://localhost:1323/books" -Method POST -ContentType "application/json" -
 irm "http://localhost:1323/books" -Method POST -ContentType "application/json" -Body '{"title": "Przeminęło z wiatrem", "author":"Margaret Mitchell", "price": 59.99}' -Headers @{"Content-Type"="application/json"}
 irm "http://localhost:1323/books/seed" -Method POST 
 
+irm "http://localhost:1323/books" -Method POST -ContentType "application/json" -Body '{"title": "Przeminęło z wiatrem", "author":"Margaret Mitchell", "price": 59.99, "category_id": 2}' -Headers @{"Content-Type"="application/json"}
+
 # PUT
 irm "http://localhost:1323/books/[ID]" -Method PUT -ContentType "application/json" -Body '{"title": "TYTUŁ", "author":"AUTOR", "price": "CENA"}' -Headers @{"Content-Type"="application/json"}
 irm "http://localhost:1323/books/1" -Method PUT -ContentType "application/json" -Body '{"title": "Drużyna Pierścienia", "author":"J.R.R. Tolkien", "price": 34.99}' -Headers @{"Content-Type"="application/json"}
