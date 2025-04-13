@@ -32,3 +32,12 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ❌ 5.0 Aplikacja obsłuży dodatkowo jedną z platform: Slack, Messenger, Webex
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/Kotlin)
 ### ![Demo](Dema/E-Biznes_Kotlin.mkv)
+
+## Zadanie 4 Go
+✅ 3.0 Należy stworzyć aplikację we frameworki echo w j. Go, która będzie miała kontroler Produktów zgodny z CRUD [Commit](https://github.com/LukashWalancik/E-biznes/commit/a0604fa3314085db045555887eebb095320ffa65)  
+✅ 3.5 Należy stworzyć model Produktów wykorzystując gorm oraz wykorzystać model do obsługi produktów (CRUD) w kontrolerze (zamiast listy) [Commit](https://github.com/LukashWalancik/E-biznes/commit/5b565397e080e795d9205e790dcf32707ff0d26c)  
+✅ 4.0 Należy dodać model Koszyka oraz dodać odpowiedni endpoint [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6ca700735b5fcb7f88e1a290b90d32fd297b184)  
+✅ 4.5 Należy stworzyć model kategorii i dodać relację między kategorią, a produktem [Commit](https://github.com/LukashWalancik/E-biznes/commit/984f7a8caae8d9475ea055bc7a2b9d2d692dffb8)  
+✅ 5.0 pogrupować zapytania w gorm’owe scope'y [Commit](https://github.com/LukashWalancik/E-biznes/commit/3e21a47df9cfe2aff957f30067324618d927f1c5)  
+### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/Golang)  
+### ![Demo](Dema/E-Biznes_Golang.mkv)
