@@ -1,0 +1,32 @@
+.cart-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 50;
+  }
+  
+  .cart-button {
+    padding: 12px;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .cart-active {
+    background-color: #3b82f6; /* Niebieski */
+    color: white;
+  }
+  
+  .cart-inactive {
+    background-color: #e5e7eb; /* Jasnoszary */
+    color: #6b7280; /* Szary tekst */
+    cursor: not-allowed;
+  }
+  
+  .cart-count {
+    margin-left: 0.5rem;
+    font-weight: bold;
+  }
+  
