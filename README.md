@@ -49,4 +49,4 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 4.5 Należy dodać skrypt uruchamiający aplikację serwerową oraz kliencką na dockerze via docker-compose [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6c8568bae73635c95d5834333c1905171c47d9c)  
 ✅ 5.0 Należy wykorzystać axios’a oraz dodać nagłówki pod CORS [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6c8568bae73635c95d5834333c1905171c47d9c)  
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/React)  
-### ![Demo](Dema/E-Biznes_React.mkv)
+### ![Demo](Dema/E-Biznes_React.mp4)
