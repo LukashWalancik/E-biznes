@@ -1,0 +1,54 @@
+# Node.js
+/node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+# Możesz dodać 'package-lock.json', jeśli chcesz ignorować zależności, ale nie jest to powszechnie zalecane
+
+# Logi
+*.log
+
+# Foldery generowane przez build
+/dist/
+/build/
+/public/
+/out/
+
+# Foldery dla IDE
+/.idea/
+/.vscode/
+/*.iml
+
+# Baza danych
+*.sqlite
+*.sqlite3
+*.db
+
+# Pliki tymczasowe
+*.swp
+*.swo
+
+# Go
+/bin/
+/pkg/
+/vendor/
+
+# Systemy plików
+.DS_Store
+Thumbs.db
+
+# Pliki konfiguracyjne systemów CI/CD
+/.env
+.env.local
+.env.development
+.env.production
+
+# Nginx, Apache logi
+*.log
+
+# Docker
+**/docker-compose.override.yml
+Dockerfile*
+docker-compose.yml
+.dockerignore
