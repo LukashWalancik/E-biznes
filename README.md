@@ -41,3 +41,10 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 5.0 pogrupować zapytania w gorm’owe scope'y [Commit](https://github.com/LukashWalancik/E-biznes/commit/3e21a47df9cfe2aff957f30067324618d927f1c5)  
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/Golang)  
 ### ![Demo](Dema/E-Biznes_Golang.mkv)
+
+## Zadanie 5 Frontend
+✅ 3.0 W ramach projektu należy stworzyć dwa komponenty: Produkty oraz Płatności; Płatności powinny wysyłać do aplikacji serwerowej dane, a w Produktach powinniśmy pobierać dane o produktach z aplikacji serwerowej [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6c8568bae73635c95d5834333c1905171c47d9c)  
+✅ 3.5 Należy dodać Koszyk wraz z widokiem; należy wykorzystać routing [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6c8568bae73635c95d5834333c1905171c47d9c)  
+✅ 4.0 Dane pomiędzy wszystkimi komponentami powinny być przesyłane za pomocą React hooks [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6c8568bae73635c95d5834333c1905171c47d9c)  
+✅ 4.5 Należy dodać skrypt uruchamiający aplikację serwerową oraz kliencką na dockerze via docker-compose [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6c8568bae73635c95d5834333c1905171c47d9c)  
+✅ 5.0 Należy wykorzystać axios’a oraz dodać nagłówki pod CORS [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6c8568bae73635c95d5834333c1905171c47d9c)  
