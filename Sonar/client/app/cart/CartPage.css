@@ -1,0 +1,130 @@
+.cart-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  .cart-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: var(--md-sys-color-primary);
+    text-align: center;
+  }
+  
+  .cart-empty {
+    text-align: center;
+  }
+  
+  .cart-back-button {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .cart-back-button:hover {
+    background-color: var(--md-sys-color-primary-fixed-dim);
+  }
+  
+  .cart-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  @media (min-width: 768px) {
+    .cart-content {
+      flex-direction: row;
+    }
+  }
+  
+  .cart-items {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .cart-item {
+    background-color: var(--md-sys-color-surface-container);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-author {
+    font-size: 0.9rem;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+  
+  .cart-price {
+    font-weight: bold;
+    color: var(--md-sys-color-primary);
+    font-size: 1.1rem;
+  }
+  
+  .cart-summary {
+    flex: 1;
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-summary h2 {
+    margin-bottom: 20px;
+    color: var(--md-sys-color-on-secondary-container);
+  }
+  
+  .cart-total {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  
+  .cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .cart-button-primary {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .cart-button-primary:hover {
+    background-color: var(--md-sys-color-primary-fixed-dim);
+  }
+  
+  .cart-button-secondary {
+    background-color: transparent;
+    color: var(--md-sys-color-primary);
+    padding: 12px;
+    border: 2px solid var(--md-sys-color-primary);
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .cart-button-secondary:hover {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+  }
+  
