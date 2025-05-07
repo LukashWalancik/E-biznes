@@ -10,6 +10,11 @@ type CartContextType = {
   addToCart: (book: Book) => void
   clearCart: () => void
 }
+declare global {
+  interface Window {
+    _cartContext?: CartContextType;
+  }
+}
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
@@ -22,6 +27,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearCart = () => {
     setCart([])
+  }
+
+  if (typeof window !== 'undefined') {
+    window._cartContext = { cart, addToCart, clearCart }
   }
 
   return (

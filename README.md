@@ -50,3 +50,10 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 5.0 Należy wykorzystać axios’a oraz dodać nagłówki pod CORS [Commit](https://github.com/LukashWalancik/E-biznes/commit/f6c8568bae73635c95d5834333c1905171c47d9c)  
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/React)  
 ### ![Demo](Dema/E-Biznes_React.mp4)
+
+## Zadanie 6 Testy
+✅ 3.0 Należy stworzyć 20 przypadków testowych w CypressJS lub Selenium (Kotlin, Python, Java, JS, Go, Scala) [Commit](https://github.com/LukashWalancik/E-biznes/commit/9996012e6ce04c16708eddc03681d0f30c0698c9)  
+✅ 3.5 Należy rozszerzyć testy funkcjonalne, aby zawierały minimum 50 asercji [Commit](https://github.com/LukashWalancik/E-biznes/commit/9996012e6ce04c16708eddc03681d0f30c0698c9)  
+✅ 4.0 Należy stworzyć testy jednostkowe do wybranego wcześniejszego projektu z minimum 50 asercjami [Commit](https://github.com/LukashWalancik/E-biznes/commit/9996012e6ce04c16708eddc03681d0f30c0698c9)  
+✅ 4.5 Należy dodać testy API, należy pokryć wszystkie endpointy z minimum jednym scenariuszem negatywnym per endpoint [Commit](https://github.com/LukashWalancik/E-biznes/commit/9996012e6ce04c16708eddc03681d0f30c0698c9)  
+✅ 5.0 Należy uruchomić testy funkcjonalne na Browserstacku [Commit](https://github.com/LukashWalancik/E-biznes/commit/9996012e6ce04c16708eddc03681d0f30c0698c9)  
