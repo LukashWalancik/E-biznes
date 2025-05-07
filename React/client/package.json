@@ -11,6 +11,7 @@
   "devDependencies": {
     "@types/node": "22.15.2",
     "@types/react": "19.1.2",
+    "cypress": "^14.3.3",
     "typescript": "5.8.3"
   }
 }

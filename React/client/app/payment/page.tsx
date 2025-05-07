@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCart } from '../context/CartContext'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
@@ -27,6 +27,13 @@ export default function PaymentPage() {
     }
 
     const [error, setError] = useState(null)
+
+    // Przekierowanie, gdy koszyk jest pusty
+    useEffect(() => {
+        if (cart.length === 0) {
+            router.push('/books')
+        }
+    }, [cart, router])
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -108,7 +115,6 @@ export default function PaymentPage() {
                         <input
                             type="text"
                             name="cardNumber"
-                            // value={form.cardNumber || ''}
                             onChange={handleChange}
                             required
                         />
@@ -121,7 +127,6 @@ export default function PaymentPage() {
                         <input
                             type="text"
                             name="blikCode"
-                            // value={form.blikCode || ''}
                             onChange={handleChange}
                             required
                         />
@@ -134,4 +139,3 @@ export default function PaymentPage() {
         </div>
     )
 }
-
