@@ -57,3 +57,10 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 4.0 Należy stworzyć testy jednostkowe do wybranego wcześniejszego projektu z minimum 50 asercjami [Commit](https://github.com/LukashWalancik/E-biznes/commit/9996012e6ce04c16708eddc03681d0f30c0698c9)  
 ✅ 4.5 Należy dodać testy API, należy pokryć wszystkie endpointy z minimum jednym scenariuszem negatywnym per endpoint [Commit](https://github.com/LukashWalancik/E-biznes/commit/9996012e6ce04c16708eddc03681d0f30c0698c9)  
 ✅ 5.0 Należy uruchomić testy funkcjonalne na Browserstacku [Commit](https://github.com/LukashWalancik/E-biznes/commit/9996012e6ce04c16708eddc03681d0f30c0698c9)  
+
+## Zadanie 7 Sonar
+✅ 3.0 Należy dodać litera do odpowiedniego kodu aplikacji serwerowej w hookach gita [Commit] ()  
+✅ 3.5 Należy wyeliminować wszystkie bugi w kodzie w Sonarze (kod aplikacji serwerowej) [Commit] ()  
+✅ 4.0 Należy wyeliminować wszystkie zapaszki w kodzie w Sonarze (kod aplikacji serwerowej) [Commit] ()  
+✅ 4.5 Należy wyeliminować wszystkie podatności oraz błędy bezpieczeństwa w kodzie w Sonarze (kod aplikacji serwerowej) [Commit] ()  
+✅ 5.0 Należy wyeliminować wszystkie błędy oraz zapaszki w kodzie aplikacji klienckiej [Commit] ()  
