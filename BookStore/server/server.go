@@ -3,13 +3,13 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
 	"ebiznes/controllers"
 	"ebiznes/models"
-	// "ebiznes/models"
 )
 
 func main() {
@@ -17,11 +17,22 @@ func main() {
 	e := echo.New()
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:3000"}, // albo "*" na dev
+		AllowOrigins: []string{"http://localhost:3000"},
 		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
 	}))
 
 	models.Initialize()
+
+	if os.Getenv("JWT_SECRET") == "" {
+		os.Setenv("JWT_SECRET", "bardzo-tajny-klucz-dla-projektu-studenckiego")
+	}
+
+	e.POST("/register", controllers.RegisterUser)
+	e.POST("/login", controllers.LoginUser)
+
+	e.GET("/profile", controllers.GetUserProfile, controllers.AuthMiddleware)
+
 	// books
 	e.GET("/books", controllers.GetBooks)
 	e.GET("/books/:id", controllers.GetBook)
