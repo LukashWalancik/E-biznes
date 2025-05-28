@@ -1,0 +1,245 @@
+:root {
+    --md-sys-color-primary: rgb(43 99 139);
+    --md-sys-color-surface-tint: rgb(43 99 139);
+    --md-sys-color-on-primary: rgb(255 255 255);
+    --md-sys-color-primary-container: rgb(204 229 255);
+    --md-sys-color-on-primary-container: rgb(4 75 113);
+    --md-sys-color-secondary: rgb(80 96 111);
+    --md-sys-color-on-secondary: rgb(255 255 255);
+    --md-sys-color-secondary-container: rgb(212 228 246);
+    --md-sys-color-on-secondary-container: rgb(57 72 86);
+    --md-sys-color-tertiary: rgb(102 88 123);
+    --md-sys-color-on-tertiary: rgb(255 255 255);
+    --md-sys-color-tertiary-container: rgb(236 220 255);
+    --md-sys-color-on-tertiary-container: rgb(78 65 98);
+    --md-sys-color-error: rgb(186 26 26);
+    --md-sys-color-on-error: rgb(255 255 255);
+    --md-sys-color-error-container: rgb(255 218 214);
+    --md-sys-color-on-error-container: rgb(147 0 10);
+    --md-sys-color-background: rgb(247 249 255);
+    --md-sys-color-on-background: rgb(24 28 32);
+    --md-sys-color-surface: rgb(247 249 255);
+    --md-sys-color-on-surface: rgb(24 28 32);
+    --md-sys-color-surface-variant: rgb(222 227 235);
+    --md-sys-color-on-surface-variant: rgb(66 71 78);
+    --md-sys-color-outline: rgb(114 120 126);
+    --md-sys-color-outline-variant: rgb(194 199 206);
+    --md-sys-color-shadow: rgb(0 0 0);
+    --md-sys-color-scrim: rgb(0 0 0);
+    --md-sys-color-inverse-surface: rgb(45 49 53);
+    --md-sys-color-inverse-on-surface: rgb(238 241 246);
+    --md-sys-color-inverse-primary: rgb(152 204 249);
+    --md-sys-color-primary-fixed: rgb(204 229 255);
+    --md-sys-color-on-primary-fixed: rgb(0 30 49);
+    --md-sys-color-primary-fixed-dim: rgb(152 204 249);
+    --md-sys-color-on-primary-fixed-variant: rgb(4 75 113);
+    --md-sys-color-secondary-fixed: rgb(212 228 246);
+    --md-sys-color-on-secondary-fixed: rgb(13 29 42);
+    --md-sys-color-secondary-fixed-dim: rgb(184 200 217);
+    --md-sys-color-on-secondary-fixed-variant: rgb(57 72 86);
+    --md-sys-color-tertiary-fixed: rgb(236 220 255);
+    --md-sys-color-on-tertiary-fixed: rgb(33 21 52);
+    --md-sys-color-tertiary-fixed-dim: rgb(209 191 231);
+    --md-sys-color-on-tertiary-fixed-variant: rgb(78 65 98);
+    --md-sys-color-surface-dim: rgb(215 218 223);
+    --md-sys-color-surface-bright: rgb(247 249 255);
+    --md-sys-color-surface-container-lowest: rgb(255 255 255);
+    --md-sys-color-surface-container-low: rgb(241 244 249);
+    --md-sys-color-surface-container: rgb(235 238 243);
+    --md-sys-color-surface-container-high: rgb(230 232 238);
+    --md-sys-color-surface-container-highest: rgb(224 226 232);
+}
+
+
+.ksiazki {
+  color: var(--md-sys-color-primary);
+  text-align: center;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.card {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    padding: 20px;
+    padding-bottom: 50px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: transform 0.6s;
+}
+
+.card a {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    text-decoration: none;
+    margin-top: 100px;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.card-header{
+    margin-bottom: 15px;
+    color: var(--md-sys-color-primary);
+}
+
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card h3 {
+    margin-bottom: 15px;
+    color: var(--md-sys-color-primary);
+}
+
+
+
+.card a:hover {
+    background-color: var(--md-sys-color-primary-fixed-dim);
+}
+
+.container {
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .grid {
+    display: grid;
+  }
+  
+  .gap-6 {
+    gap: 1.5rem;
+  }
+  
+  .text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  
+  .text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  
+  .font-bold {
+    font-weight: 700;
+  }
+  
+  .mb-1 {
+    margin-bottom: 0.25rem;
+  }
+  
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .mb-8 {
+    margin-bottom: 2rem;
+  }
+  
+  .mt-4 {
+    margin-top: 1rem;
+  }
+  
+  .mt-6 {
+    margin-top: 1.5rem;
+  }
+  
+.add-to-cart-button{
+    background-color: var(--md-sys-color-primary); 
+    border: none;
+    color: var(--md-sys-color-on-primary);
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+.add-to-cart-button:hover {
+    background-color: var(--md-sys-color-primary-fixed-dim);
+    color: var(--md-sys-color-on-primary-fixed);
+  }
+  
+  @media (min-width: 768px) {
+    .md\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .lg\:grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* ui/global.css - dodaj na końcu pliku */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Odstępy między grupami pól */
+  padding: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--md-sys-color-on-secondary-container); /* Użyj koloru tekstu na tle secondary container */
+  text-align: left; /* Wyrównaj etykiety do lewej */
+}
+
+.form-input {
+  padding: 10px;
+  border: 1px solid var(--md-sys-color-outline); /* Kolor ramki inputu */
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: var(--md-sys-color-surface-container-lowest); /* Jasne tło inputu */
+  color: var(--md-sys-color-on-surface); /* Kolor tekstu w inpucie */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--md-sys-color-primary); /* Podświetlenie przy focusie */
+  box-shadow: 0 0 0 2px rgba(43, 99, 139, 0.2); /* Delikatny cień */
+}
+
+/* Możesz dodać też styl dla przycisku w formularzu, jeśli jest inny niż globalny .add-to-cart-button */
+.form-container button[type="submit"] {
+    width: 100%; /* Rozciągnij przycisk na całą szerokość formularza */
+}
