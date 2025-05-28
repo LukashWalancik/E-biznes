@@ -15,7 +15,7 @@ func Initialize() {
 		panic("failed to connect database")
 	}
 
-	err = DB.AutoMigrate(&Category{}, &Book{}, &Cart{})
+	err = DB.AutoMigrate(&Category{}, &Book{}, &Cart{}, &User{})
 	if err != nil {
 		panic("failed to migrate tables")
 	}
