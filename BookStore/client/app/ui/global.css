@@ -202,3 +202,44 @@ body {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
+
+/* ui/global.css - dodaj na końcu pliku */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Odstępy między grupami pól */
+  padding: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--md-sys-color-on-secondary-container); /* Użyj koloru tekstu na tle secondary container */
+  text-align: left; /* Wyrównaj etykiety do lewej */
+}
+
+.form-input {
+  padding: 10px;
+  border: 1px solid var(--md-sys-color-outline); /* Kolor ramki inputu */
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: var(--md-sys-color-surface-container-lowest); /* Jasne tło inputu */
+  color: var(--md-sys-color-on-surface); /* Kolor tekstu w inpucie */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--md-sys-color-primary); /* Podświetlenie przy focusie */
+  box-shadow: 0 0 0 2px rgba(43, 99, 139, 0.2); /* Delikatny cień */
+}
+
+/* Możesz dodać też styl dla przycisku w formularzu, jeśli jest inny niż globalny .add-to-cart-button */
+.form-container button[type="submit"] {
+    width: 100%; /* Rozciągnij przycisk na całą szerokość formularza */
+}

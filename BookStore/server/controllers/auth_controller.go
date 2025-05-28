@@ -4,10 +4,12 @@ package controllers
 import (
 	"ebiznes/models"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"time"
 
+	// <--- DODAJ TEN IMPORT
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
@@ -45,28 +47,46 @@ func generateJWT(userID uint) (string, error) {
 
 func RegisterUser(c echo.Context) error {
 	var newUser models.User
+	// Próba bindowania danych z żądania do struktury newUser
 	if err := c.Bind(&newUser); err != nil {
+		log.Printf("Błąd bindowania danych użytkownika: %v", err) // Log błędu bindowania
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid input"})
 	}
 
+	// Dodatkowe logi, aby sprawdzić, co zostało odebrane po bindowaniu
+	log.Printf("Odebrane dane rejestracji: Email=%s, FirstName=%s, LastName=%s, PasswordLength=%d",
+		newUser.Email, newUser.FirstName, newUser.LastName, len(newUser.Password))
+	log.Printf("Street: %s, City: %s, ZipCode: %s", newUser.Street, newUser.City, newUser.ZipCode)
+
+	// Walidacja podstawowych pól
 	if newUser.Email == "" || newUser.Password == "" || newUser.FirstName == "" || newUser.LastName == "" {
+		// Loguj, które konkretnie pole jest puste
+		log.Printf("Walidacja nieudana. Puste pola: Email=%t, Password=%t, FirstName=%t, LastName=%t",
+			newUser.Email == "", newUser.Password == "", newUser.FirstName == "", newUser.LastName == "")
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Email, password, first name, and last name are required"})
 	}
 
+	// Sprawdź, czy użytkownik o danym emailu już istnieje
 	_, err := models.FindUserByEmail(newUser.Email)
 	if err == nil {
+		log.Printf("Próba rejestracji istniejącego użytkownika: %s", newUser.Email) // Log
 		return c.JSON(http.StatusConflict, map[string]string{"message": "User with this email already exists"})
 	}
 
+	// Stwórz nowego użytkownika w bazie danych
 	if err := models.CreateUser(&newUser); err != nil {
+		log.Printf("Błąd tworzenia użytkownika w bazie danych: %v", err) // Log
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to register user", "error": err.Error()})
 	}
-
+	log.Printf("ID nowo zarejestrowanego użytkownika: %d", newUser.ID) // <-- Dodaj ten log!
+	// Generuj JWT
 	token, err := generateJWT(newUser.ID)
 	if err != nil {
+		log.Printf("Błąd generowania JWT dla użytkownika %d: %v", newUser.ID, err) // Log
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to generate authentication token"})
 	}
 
+	// Zwróć sukces
 	return c.JSON(http.StatusCreated, map[string]interface{}{
 		"message":    "User registered successfully",
 		"token":      token,

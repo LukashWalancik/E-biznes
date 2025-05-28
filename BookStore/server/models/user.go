@@ -13,7 +13,7 @@ type User struct {
 	FirstName string    `json:"first_name"`
 	LastName  string    `json:"last_name"`
 	Email     string    `gorm:"unique;not null" json:"email"`
-	Password  string    `gorm:"not null" json:"-"`
+	Password  string    `gorm:"not null"`
 	Street    string    `json:"street"`
 	City      string    `json:"city"`
 	ZipCode   string    `json:"zip_code"`
