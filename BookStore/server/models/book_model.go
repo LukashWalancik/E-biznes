@@ -60,21 +60,18 @@ func ClearBooks() error {
 	return DB.Exec("DELETE FROM books").Error
 }
 
-// Scope: filtruj po kategorii
 func ByCategory(categoryID uint) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Where("category_id = ?", categoryID)
 	}
 }
 
-// Scope: filtruj po autorze
 func ByAuthor(author string) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Where("author = ?", author)
 	}
 }
 
-// Scope: filtruj książki tańsze niż
 func CheaperThan(price float64) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Where("price < ?", price)

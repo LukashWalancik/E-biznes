@@ -23,19 +23,6 @@ import (
 var jwtSecret []byte
 var googleOauthConfig *oauth2.Config
 
-// var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
-
-// var googleOauthConfig = &oauth2.Config{
-// 	ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
-// 	ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
-// 	RedirectURL:  os.Getenv("GOOGLE_REDIRECT_URL"),
-// 	Scopes: []string{
-// 		"https://www.googleapis.com/auth/userinfo.email",
-// 		"https://www.googleapis.com/auth/userinfo.profile",
-// 	},
-// 	Endpoint: google.Endpoint,
-// }
-
 func init() {
 	godotenv.Load(".env")
 	jwtSecret = []byte(os.Getenv("JWT_SECRET"))
@@ -55,10 +42,10 @@ func init() {
 	}
 	if googleOauthConfig.ClientID == "" || googleOauthConfig.ClientSecret == "" || googleOauthConfig.RedirectURL == "" {
 		log.Println("WARNING: Google OAuth environment variables not set. Google login will not work.")
-		log.Printf("GOOGLE_CLIENT_ID: %s", os.Getenv("GOOGLE_CLIENT_ID"))                  // Dodaj to
-		log.Printf("GOOGLE_CLIENT_SECRET: %s", os.Getenv("GOOGLE_CLIENT_SECRET"))          // Dodaj to
-		log.Printf("GOOGLE_REDIRECT_URL (from config): %s", googleOauthConfig.RedirectURL) // Dodaj to
-		log.Printf("GOOGLE_REDIRECT_URL (from env): %s", os.Getenv("GOOGLE_REDIRECT_URL")) // Dodaj to
+		log.Printf("GOOGLE_CLIENT_ID: %s", os.Getenv("GOOGLE_CLIENT_ID"))
+		log.Printf("GOOGLE_CLIENT_SECRET: %s", os.Getenv("GOOGLE_CLIENT_SECRET"))
+		log.Printf("GOOGLE_REDIRECT_URL (from config): %s", googleOauthConfig.RedirectURL)
+		log.Printf("GOOGLE_REDIRECT_URL (from env): %s", os.Getenv("GOOGLE_REDIRECT_URL"))
 	}
 }
 

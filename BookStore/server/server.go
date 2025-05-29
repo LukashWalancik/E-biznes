@@ -28,7 +28,6 @@ func main() {
 
 	err := godotenv.Load(".env")
 	if err != nil {
-		// Loguj błąd, ale nie rób Fatal, jeśli .env jest opcjonalny
 		log.Printf("WARNING: Error loading .env file: %v. Relying on system environment variables.", err)
 	}
 

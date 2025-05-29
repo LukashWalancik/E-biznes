@@ -1,8 +1,7 @@
-// pages/register.jsx (lub app/register/page.tsx)
-"use client"; // <--- DODAJ TĘ LINIĘ NA SAMEJ GÓRZE
+"use client";
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // <--- ZMIEŃ NA next/navigation
+import { useRouter } from 'next/navigation'; 
 import Link from 'next/link';
 
 export default function RegisterPage() {
@@ -15,7 +14,7 @@ export default function RegisterPage() {
     city: '',
     zipCode: '',
   });
-  const [message, setMessage] = useState(''); // Komunikaty dla użytkownika
+  const [message, setMessage] = useState('');
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -28,7 +27,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(''); // Wyczyść poprzednie komunikaty
+    setMessage('');
 
     try {
       const response = await fetch('http://localhost:1323/register', {
@@ -51,13 +50,10 @@ export default function RegisterPage() {
 
       if (response.ok) {
         setMessage('Rejestracja udana! Zostałeś zalogowany.');
-        // Zapisz token JWT w localStorage
         localStorage.setItem('authToken', data.token);
-        // Możesz też zapisać dane użytkownika, jeśli chcesz
         localStorage.setItem('userEmail', data.email);
         localStorage.setItem('userName', data.first_name + ' ' + data.last_name);
 
-        // Przekieruj użytkownika na stronę główną lub profil
         router.push('/');
       } else {
         setMessage(`Błąd rejestracji: ${data.message || 'Nieznany błąd'}`);
