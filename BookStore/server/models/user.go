@@ -18,6 +18,7 @@ type User struct {
 	City      string    `json:"city"`
 	ZipCode   string    `json:"zip_code"`
 	GoogleID  string    `gorm:"uniqueIndex"`
+	GithubID  string    `gorm:"uniqueIndex"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
