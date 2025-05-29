@@ -1,8 +1,10 @@
+// client/app/register/page.tsx
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 import Link from 'next/link';
+import { useAuth } from '../context/AuthContext';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -16,6 +18,13 @@ export default function RegisterPage() {
   });
   const [message, setMessage] = useState('');
   const router = useRouter();
+  const { isAuthenticated, login } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, router]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,9 +59,7 @@ export default function RegisterPage() {
 
       if (response.ok) {
         setMessage('Rejestracja udana! Zostałeś zalogowany.');
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userEmail', data.email);
-        localStorage.setItem('userName', data.first_name + ' ' + data.last_name);
+        login(data.token, `${data.first_name} ${data.last_name}`, data.email); 
 
         router.push('/');
       } else {
@@ -63,6 +70,19 @@ export default function RegisterPage() {
       setMessage('Wystąpił błąd podczas komunikacji z serwerem.');
     }
   };
+
+  if (isAuthenticated) {
+    return (
+      <main>
+        <div className="card-container">
+          <div className="card" style={{ maxWidth: '500px', margin: 'auto' }}>
+            <h3 className="card-header">Rejestracja</h3>
+            <p>Jesteś już zalogowany. Przekierowuję...</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main>

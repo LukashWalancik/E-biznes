@@ -1,0 +1,116 @@
+/* client/app/chat/Chat.module.css */
+.chatPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+  background-color: var(--md-sys-color-background);
+  padding: 20px;
+}
+
+
+.chatContainer {
+  background-color: var(--md-sys-color-surface-container-lowest);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  overflow: hidden;
+  color: var(--md-sys-color-on-surface);
+}
+
+.chatTitle {
+  text-align: center;
+  padding: 15px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  color: var(--md-sys-color-primary);
+  margin-bottom: 0;
+}
+
+.messagesBox {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  padding: 8px 12px;
+  border-radius: 18px;
+  max-width: 80%;
+  line-height: 1.4;
+  word-wrap: break-word;
+  font-size: 0.95em;
+}
+
+.user {
+  align-self: flex-end;
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border-bottom-right-radius: 2px;
+}
+
+.bot {
+  align-self: flex-start;
+  background-color: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
+  border-bottom-left-radius: 2px;
+}
+
+.messageSender {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.inputBox {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  gap: 10px;
+}
+
+.messageInput {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 20px;
+  font-size: 1em;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  color: var(--md-sys-color-on-surface);
+  outline: none;
+}
+
+.messageInput:focus {
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 0.15rem rgba(43, 99, 139, 0.25);
+}
+
+.sendButton {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sendButton:hover {
+  background-color: var(--md-sys-color-primary-fixed-dim);
+}
+
+.sendButton:disabled {
+  background-color: var(--md-sys-color-outline);
+  cursor: not-allowed;
+}

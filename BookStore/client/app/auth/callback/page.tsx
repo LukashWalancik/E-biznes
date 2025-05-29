@@ -1,8 +1,8 @@
-'use client';
+// client/app/auth/callback/page.tsx
+"use client";
 
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -17,13 +17,14 @@ export default function AuthCallbackPage() {
     if (token) {
       localStorage.setItem('authToken', token);
       localStorage.setItem('userEmail', email || '');
-      localStorage.setItem('userFirstName', firstName || '');
-      localStorage.setItem('userLastName', lastName || '');
+      
+      const fullUserName = `${firstName || ''} ${lastName || ''}`.trim();
+      localStorage.setItem('userName', fullUserName); 
 
-      router.replace('/');
+      router.push('/');
     } else {
       console.error("Token not found in URL parameters.");
-      router.replace('/login');
+      router.push('/login?message=Błąd logowania: brak tokena.');
     }
   }, [searchParams, router]);
 

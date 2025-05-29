@@ -41,3 +41,26 @@
 .nav-links a:hover {
     color: var(--md-sys-color-primary-fixed-dim);
 }
+
+.nav-links .logout-button {
+    background-color: transparent;
+    color: var(--md-sys-color-on-primary);
+    border: none;
+    padding: 0;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 15px;
+}
+
+.nav-links .logout-button:hover {
+    color: var(--md-sys-color-on-primary);
+    text-decoration: underline;
+}
+
+.nav-links .welcome-message {
+    color: var(--md-sys-color-on-primary);
+    font-weight: normal;
+    margin-right: 15px;
+}

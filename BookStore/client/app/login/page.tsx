@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -14,23 +15,33 @@ export default function LoginPage() {
   const [message, setMessage] = useState('');
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isAuthenticated, login } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, router]);
 
   useEffect(() => {
     const token = searchParams.get('token');
     const email = searchParams.get('email');
     const firstName = searchParams.get('first_name');
     const lastName = searchParams.get('last_name');
+    const queryMessage = searchParams.get('message');
+
+    if (queryMessage) {
+        setMessage(queryMessage);
+    }
 
     if (token && email && firstName && lastName) {
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('userEmail', email);
-      localStorage.setItem('userName', `${firstName} ${lastName}`);
+      login(token, `${firstName} ${lastName}`, email); 
       setMessage('Logowanie przez Google udane! Witaj ponownie.');
       router.push('/');
     } else if (token && !email) {
       setMessage('Logowanie przez Google zakończone, ale brakuje niektórych danych.');
     }
-  }, [searchParams, router]);
+  }, [searchParams, router, login]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,9 +71,7 @@ export default function LoginPage() {
 
       if (response.ok) {
         setMessage('Logowanie udane! Witaj ponownie.');
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userEmail', data.email);
-        localStorage.setItem('userName', data.first_name + ' ' + data.last_name);
+        login(data.token, `${data.first_name} ${data.last_name}`, data.email); 
 
         router.push('/');
       } else {
@@ -81,6 +90,19 @@ export default function LoginPage() {
   const handleGithubLogin = () => {
     window.location.href = 'http://localhost:1323/auth/github';
   };
+
+  if (isAuthenticated) {
+    return (
+      <main>
+        <div className="card-container">
+          <div className="card" style={{ maxWidth: '500px', margin: 'auto' }}>
+            <h3 className="card-header">Logowanie</h3>
+            <p>Jesteś już zalogowany. Przekierowuję...</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main>
