@@ -51,6 +51,12 @@ bookstore_keywords = [
     "polecić", "polecasz", "szukam", "znaleźć", "jakie", "które", "najlepsze"
 ]
 
+negative_sentiment_keywords = [
+    "głupi", "idiota", "cholera", "pieprzyć", "kurwa", "dupek", "kretyn",
+    "beznadziejny", "okropny", "tragiczny", "szajs", "śmieć", "do bani",
+    "pierdol", "chuj", "pojebany", "kurde", "zasrany", "piekło", "chuju", "debilu", "kretynie"
+]
+
 @app.post("/chat")
 async def chat_with_llm(request: ChatMessage):
     user_message = request.message
@@ -61,6 +67,11 @@ async def chat_with_llm(request: ChatMessage):
     if any(phrase in user_input_lower for phrase in ["dziękuję", "dziekuje", "do widzenia", "to wszystko", "koniec rozmowy", "żegnaj"]):
         log.info(f"Wykryto frazę zakończenia rozmowy. Zwracam losową wiadomość końcową.")
         return {"response": random.choice(closing_messages)}
+
+    if any(keyword in user_input_lower for keyword in negative_sentiment_keywords):
+        log.warning(f"Wykryto negatywny sentyment w wiadomości użytkownika: '{user_message}'. Zwracam ostrzeżenie.")
+        return {"response": "Proszę, używaj uprzejmego języka. Jestem tutaj, aby pomagać w sprawach związanych z księgarnią. Skupmy się na konstruktywnej rozmowie."}
+
 
     is_on_topic = False
     for keyword in bookstore_keywords:
