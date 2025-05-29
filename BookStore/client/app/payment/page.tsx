@@ -11,7 +11,7 @@ export default function PaymentPage() {
     const router = useRouter()
 
     const [form, setForm] = useState({
-        name: '',
+        name: '', // Będziemy łączyć imię i nazwisko w to pole
         email: '',
         street: '',
         city: '',
@@ -35,6 +35,21 @@ export default function PaymentPage() {
         }
     }, [cart, router])
 
+    // --- NOWY useEffect do wypełniania formularza danymi użytkownika ---
+    useEffect(() => {
+        const userEmail = localStorage.getItem('userEmail');
+        const userFirstName = localStorage.getItem('userFirstName');
+        const userLastName = localStorage.getItem('userLastName');
+
+        if (userEmail) {
+            setForm(prevForm => ({
+                ...prevForm,
+                email: userEmail,
+                name: `${userFirstName || ''} ${userLastName || ''}`.trim() // Łączymy imię i nazwisko
+            }));
+        }
+    }, []); // Pusta tablica zależności oznacza, że useEffect uruchomi się tylko raz po pierwszym renderze
+
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
@@ -47,8 +62,11 @@ export default function PaymentPage() {
             return
         } else {
             try {
+                // Do wysłania na backend możesz rozdzielić imię i nazwisko z powrotem,
+                // jeśli Twój backend oczekuje osobnych pól.
+                // Na razie wysyłamy 'name' jako połączony string.
                 const response = await axios.post('http://localhost:1323/payment', {
-                    form,
+                    form, // form zawiera teraz połączone 'name'
                     cart,
                 })
 
@@ -60,8 +78,11 @@ export default function PaymentPage() {
                     setShowSuccessModal(true)
                 }
             } catch (err) {
-                clearCart()
-                setShowSuccessModal(true)
+                // W przypadku błędu zazwyczaj nie wyświetla się sukcesu, ale błąd.
+                // Tutaj zostawiam oryginalną logikę, która zawsze pokazuje sukces.
+                console.error("Błąd podczas składania zamówienia:", err);
+                clearCart() // Czy na pewno czyścić koszyk przy błędzie? Zazwyczaj nie.
+                setShowSuccessModal(true) // Czy na pewno pokazywać modal sukcesu przy błędzie? Zazwyczaj nie.
             }
         }
     }

@@ -2,14 +2,16 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
-
 	"ebiznes/controllers"
 	"ebiznes/models"
+
+	"github.com/joho/godotenv"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -24,12 +26,21 @@ func main() {
 
 	models.Initialize()
 
+	err := godotenv.Load(".env")
+	if err != nil {
+		// Loguj błąd, ale nie rób Fatal, jeśli .env jest opcjonalny
+		log.Printf("WARNING: Error loading .env file: %v. Relying on system environment variables.", err)
+	}
+
 	if os.Getenv("JWT_SECRET") == "" {
 		os.Setenv("JWT_SECRET", "bardzo-tajny-klucz-dla-projektu-studenckiego")
 	}
 
+	// auth
 	e.POST("/register", controllers.RegisterUser)
 	e.POST("/login", controllers.LoginUser)
+	e.GET("/auth/google", controllers.GoogleLogin)
+	e.GET("/auth/google/callback", controllers.GoogleCallback)
 
 	e.GET("/profile", controllers.GetUserProfile, controllers.AuthMiddleware)
 

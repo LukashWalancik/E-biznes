@@ -243,3 +243,31 @@ body {
 .form-container button[type="submit"] {
     width: 100%; /* Rozciągnij przycisk na całą szerokość formularza */
 }
+
+/* client/ui/global.css - dodaj na końcu pliku */
+
+/* Styl dla przycisku Google Sign-In */
+.google-signin-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #4285F4; /* Kolor Google Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-signin-button:hover {
+    background-color: #357ae8; /* Ciemniejszy odcień Google Blue */
+}
+
+/* Jeśli używasz ikony Google (dodaj do public/google-logo.png) */
+.google-signin-button img {
+    margin-right: 10px;
+}
