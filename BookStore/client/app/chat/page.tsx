@@ -13,6 +13,14 @@ interface Message {
   text: string;
 }
 
+const welcomeMessages: string[] = [
+  "Witaj! Jestem Twoim asystentem w Książkarni. Jak mogę Ci pomóc dzisiaj?",
+  "Cześć! Co nowego w świecie książek? Chętnie odpowiem na Twoje pytania.",
+  "Dzień dobry! Pytaj śmiało o książki, zamówienia lub inne kwestie związane z Książkarnią.",
+  "Witaj w czacie z asystentem! Jestem gotów do pomocy. O czym chcesz porozmawiać?",
+  "Hej! Jeśli masz pytania dotyczące naszej oferty lub potrzebujesz wsparcia, jestem do Twojej dyspozycji."
+];
+
 export default function ChatPage() {
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
@@ -38,6 +46,14 @@ export default function ChatPage() {
     }
     setAuthChecked(true);
   }, [isAuthenticated, userEmail, router, logout]); 
+
+  useEffect(() => {
+    if (authChecked && isAuthenticated && isGoogleUserValidated && chatHistory.length === 0) {
+      const randomWelcome = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+      setChatHistory([{ sender: 'bot', text: randomWelcome }]);
+    }
+  }, [authChecked, isAuthenticated, isGoogleUserValidated, chatHistory]);
+
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

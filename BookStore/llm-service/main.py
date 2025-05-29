@@ -32,17 +32,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class ChatRequest(BaseModel):
+class ChatMessage(BaseModel):
     message: str
 
+closing_messages = [
+    "Cieszę się, że mogłem pomóc! Miłego dnia i zapraszamy ponownie do Książkarni!",
+    "Do usłyszenia! Jeśli masz więcej pytań o książki, jestem do Twojej dyspozycji.",
+    "Dziękuję za rozmowę. Mam nadzieję, że znajdziesz coś dla siebie w naszej ofercie!",
+    "Z przyjemnością pomogłem. Odwiedź naszą stronę po więcej wspaniałych książek!",
+    "Życzę udanych zakupów i wielu fascynujących lektur! Wróć, jeśli będziesz potrzebować pomocy."
+]
+
 @app.post("/chat")
-async def chat_with_llm(request: ChatRequest):
+async def chat_with_llm(request: ChatMessage):
     user_message = request.message
     log.info(f"Odebrano wiadomość od użytkownika: '{user_message}'")
 
+    user_input_lower = user_message.lower()
+
+    if any(phrase in user_input_lower for phrase in ["dziękuję", "dziekuje", "do widzenia", "pa", "to wszystko", "koniec rozmowy", "żegnaj"]):
+        log.info(f"Wykryto frazę zakończenia rozmowy. Zwracam losową wiadomość końcową.")
+        return {"response": random.choice(closing_messages)}
+
     MODEL_TO_USE = HF_MODEL_ID
 
-    system_prompt = "Jesteś pomocnym asystentem w internetowej księgarni."
+    system_prompt = "Jesteś pomocnym asystentem w internetowej księgarni. Odpowiadaj zwięźle i na temat."
 
     messages = [
         {"role": "system", "content": system_prompt},
@@ -77,9 +91,9 @@ async def chat_with_llm(request: ChatRequest):
     except Exception as e:
         log.error(f"Błąd komunikacji z Hugging Face API: {e}", exc_info=True)
         if "404" in str(e) or "Model not found" in str(e) or "not currently available" in str(e):
-             raise HTTPException(status_code=502, detail=f"Model LLM ({MODEL_TO_USE}) nie jest dostępny lub został nieprawidłowo skonfigurowany. Sprawdź nazwę modelu lub dostępność.")
+            raise HTTPException(status_code=502, detail=f"Model LLM ({MODEL_TO_USE}) nie jest dostępny lub został nieprawidłowo skonfigurowany. Sprawdź nazwę modelu lub dostępność.")
         else:
-             raise HTTPException(status_code=500, detail=f"Wystąpił nieoczekiwany błąd serwera: {e}")
+            raise HTTPException(status_code=500, detail=f"Wystąpił nieoczekiwany błąd serwera: {e}")
 
 if __name__ == "__main__":
     import uvicorn
