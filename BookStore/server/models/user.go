@@ -81,6 +81,32 @@ func FindOrCreateUserByGoogleID(googleID, email, firstName, lastName string) (*U
 	return &newUser, nil
 }
 
+func FindOrCreateUserByGithubID(githubID, email, firstName, lastName string) (*User, error) {
+	var user User
+	err := DB.Where("github_id = ?", githubID).First(&user).Error
+	if err == nil {
+		return &user, nil
+	}
+
+	err = DB.Where("email = ?", email).First(&user).Error
+	if err == nil {
+		user.GithubID = githubID
+		return &user, DB.Save(&user).Error
+	}
+
+	newUser := User{
+		GithubID:  githubID,
+		Email:     email,
+		FirstName: firstName,
+		LastName:  lastName,
+	}
+	err = DB.Create(&newUser).Error
+	if err != nil {
+		return nil, err
+	}
+	return &newUser, nil
+}
+
 func GetUserByID(id uint) (*User, error) {
 	var user User
 	err := DB.First(&user, id).Error
