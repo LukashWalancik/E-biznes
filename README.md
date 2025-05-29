@@ -64,3 +64,12 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 4.0 Należy wyeliminować wszystkie zapaszki w kodzie w Sonarze (kod aplikacji serwerowej) [Commit](https://github.com/LukashWalancik/E-biznes/commit/52ddf9432f9971caee7fc419de39f00d236e00fa)  
 ✅ 4.5 Należy wyeliminować wszystkie podatności oraz błędy bezpieczeństwa w kodzie w Sonarze (kod aplikacji serwerowej) [Commit](https://github.com/LukashWalancik/E-biznes/commit/52ddf9432f9971caee7fc419de39f00d236e00fa)  
 ✅ 5.0 Należy wyeliminować wszystkie błędy oraz zapaszki w kodzie aplikacji klienckiej [Commit](https://github.com/LukashWalancik/E-biznes/commit/52ddf9432f9971caee7fc419de39f00d236e00fa)  
+
+## Zadanie 8 Oauth2
+✅ 3.0 logowanie przez aplikację serwerową (bez Oauth2) [Commit](https://github.com/LukashWalancik/E-biznes/commit/1ffbcee29767bb3ad6d7c33e523e0573501258d1)  
+✅ 3.5 rejestracja przez aplikację serwerową (bez Oauth2) [Commit](https://github.com/LukashWalancik/E-biznes/commit/cd6495042851b3c8e9c0a92fe178f27ffbe07bd2)  
+✅ 4.0 logowanie via Google OAuth2 [Commit](https://github.com/LukashWalancik/E-biznes/commit/d5c78c7d4731b2bb58bc262ff29ee468445b9a93)  
+✅ 4.5 logowanie via Facebook lub Github OAuth2 [Commit](https://github.com/LukashWalancik/E-biznes/commit/404e5df350f37b428415ec4a72783109f63b4243)  
+✅ 5.0 zapisywanie danych logowania OAuth2 po stronie serwera [Commit](https://github.com/LukashWalancik/E-biznes/commit/d5c78c7d4731b2bb58bc262ff29ee468445b9a93)  
+### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/BookStore)  
+### ![Demo](Dema/E-Biznes_Oauth2.mp4)
