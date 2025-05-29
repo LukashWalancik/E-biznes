@@ -288,6 +288,12 @@ func GoogleCallback(c echo.Context) error {
 	return c.Redirect(http.StatusTemporaryRedirect, redirectURL)
 }
 
+func GithubLogin(c echo.Context) error {
+	state := generateStateOauthCookie(c.Response())
+	url := githubOauthConfig.AuthCodeURL(state)
+	return c.Redirect(http.StatusTemporaryRedirect, url)
+}
+
 func generateStateOauthCookie(w http.ResponseWriter) string {
 	var expiration = time.Now().Add(20 * time.Minute)
 	b := make([]byte, 16)
