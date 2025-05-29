@@ -41,6 +41,9 @@ func main() {
 	e.GET("/auth/google", controllers.GoogleLogin)
 	e.GET("/auth/google/callback", controllers.GoogleCallback)
 
+	e.GET("/auth/github", controllers.GithubLogin)
+	e.GET("/auth/github/callback", controllers.GithubCallback)
+
 	e.GET("/profile", controllers.GetUserProfile, controllers.AuthMiddleware)
 
 	// books

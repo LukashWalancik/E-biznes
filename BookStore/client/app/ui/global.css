@@ -266,3 +266,43 @@ body {
 .google-signin-button img {
     margin-right: 10px;
 }
+
+.google-signin-button,
+.github-signin-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px; /* Dodane dla odstępu między przyciskami */
+}
+
+.google-signin-button:hover,
+.github-signin-button:hover {
+    background-color: #e0e0e0;
+}
+
+.google-signin-button {
+    background-color: #ffffff; /* Białe tło dla Google */
+    color: #000000;
+    border-color: #dadce0;
+}
+
+.google-signin-button:hover {
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px 0 rgba(0,0,0,.12), 0 1px 1px 0 rgba(0,0,0,.20);
+}
+
+.github-signin-button {
+    background-color: #24292e; /* Ciemne tło dla GitHub */
+    color: #ffffff;
+    border-color: #24292e;
+}
+
+.github-signin-button:hover {
+    background-color: #33383d;
+}

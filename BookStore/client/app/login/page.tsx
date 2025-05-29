@@ -78,6 +78,10 @@ export default function LoginPage() {
     window.location.href = 'http://localhost:1323/auth/google';
   };
 
+  const handleGithubLogin = () => {
+    window.location.href = 'http://localhost:1323/auth/github';
+  };
+
   return (
     <main>
       <div className="card-container">
@@ -118,6 +122,10 @@ export default function LoginPage() {
             <button onClick={handleGoogleLogin} className="google-signin-button">
               <Image src="/google-logo.svg" alt="Google logo" width={20} height={20} style={{ marginRight: '10px' }} />
               Zaloguj się z Google
+            </button>
+            <button onClick={handleGithubLogin} className="github-signin-button">
+              <Image src="/github-mark-white.svg" alt="GitHub logo" width={20} height={20} style={{ marginRight: '10px' }} />
+              Zaloguj się z GitHub
             </button>
           </div>
 
