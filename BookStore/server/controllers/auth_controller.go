@@ -15,6 +15,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/github"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
 	"google.golang.org/api/people/v1"
@@ -22,6 +23,7 @@ import (
 
 var jwtSecret []byte
 var googleOauthConfig *oauth2.Config
+var githubOauthConfig *oauth2.Config
 
 func init() {
 	godotenv.Load(".env")
@@ -46,6 +48,21 @@ func init() {
 		log.Printf("GOOGLE_CLIENT_SECRET: %s", os.Getenv("GOOGLE_CLIENT_SECRET"))
 		log.Printf("GOOGLE_REDIRECT_URL (from config): %s", googleOauthConfig.RedirectURL)
 		log.Printf("GOOGLE_REDIRECT_URL (from env): %s", os.Getenv("GOOGLE_REDIRECT_URL"))
+	}
+
+	githubOauthConfig = &oauth2.Config{
+		ClientID:     os.Getenv("GITHUB_CLIENT_ID"),
+		ClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
+		RedirectURL:  os.Getenv("GITHUB_REDIRECT_URL"),
+		Scopes:       []string{"user:email", "read:user"},
+		Endpoint:     github.Endpoint,
+	}
+	if githubOauthConfig.ClientID == "" || githubOauthConfig.ClientSecret == "" || githubOauthConfig.RedirectURL == "" {
+		log.Println("WARNING: GitHub OAuth environment variables not set. GitHub login will not work.")
+		log.Printf("GITHUB_CLIENT_ID: %s", os.Getenv("GITHUB_CLIENT_ID"))
+		log.Printf("GITHUB_CLIENT_SECRET: %s", os.Getenv("GITHUB_CLIENT_SECRET"))
+		log.Printf("GITHUB_REDIRECT_URL (from config): %s", githubOauthConfig.RedirectURL)
+		log.Printf("GITHUB_REDIRECT_URL (from env): %s", os.Getenv("GITHUB_REDIRECT_URL"))
 	}
 }
 
