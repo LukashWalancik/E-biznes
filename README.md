@@ -73,3 +73,12 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 5.0 zapisywanie danych logowania OAuth2 po stronie serwera [Commit](https://github.com/LukashWalancik/E-biznes/commit/d5c78c7d4731b2bb58bc262ff29ee468445b9a93)  
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/BookStore)  
 ### ![Demo](Dema/E-Biznes_Oauth2.mp4)
+
+## Zadanie 9 LLM
+✅ 3.0 logowanie przez aplikację serwerową (bez Oauth2) [Commit](https://github.com/LukashWalancik/E-biznes/commit/52d0df32db459e4c8787efc003d6675133a6f148)  
+✅ 3.5 rejestracja przez aplikację serwerową (bez Oauth2) [Commit](https://github.com/LukashWalancik/E-biznes/commit/a6b26eb9f6a2fb2632fb5793a9b6b9d214eb0200)  
+✅ 4.0 logowanie via Google OAuth2 [Commit](https://github.com/LukashWalancik/E-biznes/commit/4cce6a08f75f1fa13c092317f96a2d157fa82998)  
+✅ 4.5 logowanie via Facebook lub Github OAuth2 [Commit](https://github.com/LukashWalancik/E-biznes/commit/699c56b4885d5ebb59c5609c473affa4aa44490b)  
+✅ 5.0 zapisywanie danych logowania OAuth2 po stronie serwera [Commit](https://github.com/LukashWalancik/E-biznes/commit/c7ec2105d7a57928b9f4240648050be8c307d0b3)  
+### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/BookStore)  
+### ![Demo](Dema/E-Biznes_LLM.mp4)
