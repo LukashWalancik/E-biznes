@@ -14,6 +14,7 @@ log = logging.getLogger(__name__)
 load_dotenv()
 
 HF_API_TOKEN = os.getenv("HF_API_TOKEN")
+HF_MODEL_ID = os.getenv("HF_MODEL_ID", "google/gemma-2b-it")
 
 if not HF_API_TOKEN:
     log.error("Brak zmiennej środowiskowej HF_API_TOKEN. Upewnij się, że plik .env istnieje i zawiera token.")
@@ -39,10 +40,12 @@ async def chat_with_llm(request: ChatRequest):
     user_message = request.message
     log.info(f"Odebrano wiadomość od użytkownika: '{user_message}'")
 
-    MODEL_TO_USE = "google/gemma-2b-it" 
+    MODEL_TO_USE = HF_MODEL_ID
+
+    system_prompt = "Jesteś pomocnym asystentem w internetowej księgarni."
 
     messages = [
-        {"role": "system", "content": "Jesteś pomocnym asystentem."},
+        {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_message}
     ]
 
