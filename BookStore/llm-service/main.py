@@ -43,6 +43,14 @@ closing_messages = [
     "Życzę udanych zakupów i wielu fascynujących lektur! Wróć, jeśli będziesz potrzebować pomocy."
 ]
 
+bookstore_keywords = [
+    "książka", "książki","książce","książkę","sądzisz", "autor", "autora", "tytuł", "tytulu", "cena", "ceny",
+    "katalog", "oferta", "magazyn", "dostępność", "gatunek", "gatunku",
+    "wydanie", "wydawnictwo", "zakup", "kupić", "zamówić", "dostawa", "koszyk",
+    "recenzja", "recenzje", "czytać", "czytam", "lektura", "epubs", "kindle", "audiobook",
+    "polecić", "polecasz", "szukam", "znaleźć", "jakie", "które", "najlepsze"
+]
+
 @app.post("/chat")
 async def chat_with_llm(request: ChatMessage):
     user_message = request.message
@@ -50,13 +58,24 @@ async def chat_with_llm(request: ChatMessage):
 
     user_input_lower = user_message.lower()
 
-    if any(phrase in user_input_lower for phrase in ["dziękuję", "dziekuje", "do widzenia", "pa", "to wszystko", "koniec rozmowy", "żegnaj"]):
+    if any(phrase in user_input_lower for phrase in ["dziękuję", "dziekuje", "do widzenia", "to wszystko", "koniec rozmowy", "żegnaj"]):
         log.info(f"Wykryto frazę zakończenia rozmowy. Zwracam losową wiadomość końcową.")
         return {"response": random.choice(closing_messages)}
 
+    is_on_topic = False
+    for keyword in bookstore_keywords:
+        if keyword in user_input_lower:
+            is_on_topic = True
+            break
+    
+    if not is_on_topic:
+        log.info(f"Wiadomość użytkownika poza tematyką księgarni: '{user_message}'. Zwracam generyczną odpowiedź.")
+        return {"response": "Przepraszam, jestem asystentem w księgarni i mogę odpowiadać tylko na pytania związane z książkami, autorami, zamówieniami i naszą ofertą. Czy mogę w czymś pomóc w tym zakresie?"}
+
+
     MODEL_TO_USE = HF_MODEL_ID
 
-    system_prompt = "Jesteś pomocnym asystentem w internetowej księgarni. Odpowiadaj zwięźle i na temat."
+    system_prompt = "Jesteś pomocnym asystentem w internetowej księgarni. Odpowiadaj zwięźle i na temat. Skup się wyłącznie na pytaniach związanych z książkami, autorami, wydawnictwami, cenami, dostępnością, kategoriami, zakupami i dostawą."
 
     messages = [
         {"role": "system", "content": system_prompt},
