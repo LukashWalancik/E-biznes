@@ -1,10 +1,10 @@
 // client/app/login/page.tsx
 "use client";
 
-import { useState, useEffect } from 'react'; // Dodaj useEffect
-import { useRouter, useSearchParams } from 'next/navigation'; // Dodaj useSearchParams
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image'; // Jeśli będziesz używać ikony Google
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -13,27 +13,24 @@ export default function LoginPage() {
   });
   const [message, setMessage] = useState('');
   const router = useRouter();
-  const searchParams = useSearchParams(); // Hook do odczytu parametrów URL
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Sprawdź, czy są parametry z callbacku Google
     const token = searchParams.get('token');
     const email = searchParams.get('email');
     const firstName = searchParams.get('first_name');
     const lastName = searchParams.get('last_name');
 
     if (token && email && firstName && lastName) {
-      // Jeśli tokeny są, oznacza to pomyślne logowanie przez Google
       localStorage.setItem('authToken', token);
       localStorage.setItem('userEmail', email);
       localStorage.setItem('userName', `${firstName} ${lastName}`);
       setMessage('Logowanie przez Google udane! Witaj ponownie.');
-      router.push('/'); // Przekieruj na stronę główną
+      router.push('/');
     } else if (token && !email) {
-      // Możliwy scenariusz błędu lub niepełnych danych z Google
       setMessage('Logowanie przez Google zakończone, ale brakuje niektórych danych.');
     }
-  }, [searchParams, router]); // Uruchom, gdy zmieniają się parametry URL lub router
+  }, [searchParams, router]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,10 +42,10 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(''); // Clear previous messages
+    setMessage('');
 
     try {
-      const response = await fetch('http://localhost:1323/login', { // Endpoint logowania
+      const response = await fetch('http://localhost:1323/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,9 +62,9 @@ export default function LoginPage() {
         setMessage('Logowanie udane! Witaj ponownie.');
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userEmail', data.email);
-        localStorage.setItem('userName', data.first_name + ' ' + data.last_name); // Zapisz imię i nazwisko
+        localStorage.setItem('userName', data.first_name + ' ' + data.last_name);
 
-        router.push('/'); // Przekieruj na stronę główną po zalogowaniu
+        router.push('/');
       } else {
         setMessage(`Błąd logowania: ${data.message || 'Nieznany błąd'}`);
       }
@@ -78,7 +75,6 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = () => {
-    // Przekieruj użytkownika do endpointu Google OAuth na Twoim backendzie Go
     window.location.href = 'http://localhost:1323/auth/google';
   };
 
@@ -120,8 +116,7 @@ export default function LoginPage() {
 
           <div style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
             <button onClick={handleGoogleLogin} className="google-signin-button">
-              {/* Możesz użyć obrazka logo Google here */}
-              <Image src="/google-logo.png" alt="Google logo" width={20} height={20} style={{ marginRight: '10px' }} />
+              <Image src="/google-logo.svg" alt="Google logo" width={20} height={20} style={{ marginRight: '10px' }} />
               Zaloguj się z Google
             </button>
           </div>

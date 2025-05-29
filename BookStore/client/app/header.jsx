@@ -1,6 +1,5 @@
-// components/Header.jsx
 import Link from 'next/link';
-import './ui/header.css'; // Zakładam, że ten plik jest w folderze ui
+import './ui/header.css'; 
 
 export default function Header() {
     return (
@@ -10,9 +9,8 @@ export default function Header() {
                 <ul className="nav-links">
                     <li><Link href="/books">Książki</Link></li>
                     <li><Link href="/cart">Koszyk</Link></li>
-                    {/* Dodaj linki do rejestracji i logowania */}
                     <li><Link href="/register">Rejestracja</Link></li>
-                    <li><Link href="/login">Logowanie</Link></li> {/* Ten link dodamy w kolejnym kroku */}
+                    <li><Link href="/login">Logowanie</Link></li> 
                 </ul>
             </nav>
         </header>

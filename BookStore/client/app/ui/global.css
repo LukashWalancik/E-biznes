@@ -203,12 +203,11 @@ body {
     }
 }
 
-/* ui/global.css - dodaj na końcu pliku */
 
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Odstępy między grupami pól */
+  gap: 15px;
   padding: 10px;
 }
 
@@ -220,40 +219,36 @@ body {
 .form-group label {
   margin-bottom: 5px;
   font-weight: bold;
-  color: var(--md-sys-color-on-secondary-container); /* Użyj koloru tekstu na tle secondary container */
-  text-align: left; /* Wyrównaj etykiety do lewej */
+  color: var(--md-sys-color-on-secondary-container); 
+  text-align: left;
 }
 
 .form-input {
   padding: 10px;
-  border: 1px solid var(--md-sys-color-outline); /* Kolor ramki inputu */
+  border: 1px solid var(--md-sys-color-outline);
   border-radius: 5px;
   font-size: 1rem;
-  background-color: var(--md-sys-color-surface-container-lowest); /* Jasne tło inputu */
-  color: var(--md-sys-color-on-surface); /* Kolor tekstu w inpucie */
+  background-color: var(--md-sys-color-surface-container-lowest);
+  color: var(--md-sys-color-on-surface); 
 }
 
 .form-input:focus {
   outline: none;
-  border-color: var(--md-sys-color-primary); /* Podświetlenie przy focusie */
-  box-shadow: 0 0 0 2px rgba(43, 99, 139, 0.2); /* Delikatny cień */
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 2px rgba(43, 99, 139, 0.2);
 }
 
-/* Możesz dodać też styl dla przycisku w formularzu, jeśli jest inny niż globalny .add-to-cart-button */
 .form-container button[type="submit"] {
-    width: 100%; /* Rozciągnij przycisk na całą szerokość formularza */
+    width: 100%;
 }
 
-/* client/ui/global.css - dodaj na końcu pliku */
-
-/* Styl dla przycisku Google Sign-In */
 .google-signin-button {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
-    background-color: #4285F4; /* Kolor Google Blue */
-    color: white;
+    background-color: white;
+    color: black;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -264,10 +259,10 @@ body {
 }
 
 .google-signin-button:hover {
-    background-color: #357ae8; /* Ciemniejszy odcień Google Blue */
+    background-color: #94bdff;
+    color: white;
 }
 
-/* Jeśli używasz ikony Google (dodaj do public/google-logo.png) */
 .google-signin-button img {
     margin-right: 10px;
 }

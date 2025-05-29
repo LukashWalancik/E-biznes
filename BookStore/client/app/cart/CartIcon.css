@@ -15,13 +15,13 @@
   }
   
   .cart-active {
-    background-color: #3b82f6; /* Niebieski */
+    background-color: #3b82f6;
     color: white;
   }
   
   .cart-inactive {
-    background-color: #e5e7eb; /* Jasnoszary */
-    color: #6b7280; /* Szary tekst */
+    background-color: #e5e7eb;
+    color: #6b7280;
     cursor: not-allowed;
   }
   
