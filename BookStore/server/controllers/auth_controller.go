@@ -2,6 +2,8 @@
 package controllers
 
 import (
+	"context"
+	"crypto/rand"
 	"ebiznes/models"
 	"fmt"
 	"log"
@@ -9,17 +11,54 @@ import (
 	"os"
 	"time"
 
-	// <--- DODAJ TEN IMPORT
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
+	"google.golang.org/api/option"
+	"google.golang.org/api/people/v1"
 )
 
-var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
+var jwtSecret []byte
+var googleOauthConfig *oauth2.Config
+
+// var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
+
+// var googleOauthConfig = &oauth2.Config{
+// 	ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+// 	ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
+// 	RedirectURL:  os.Getenv("GOOGLE_REDIRECT_URL"),
+// 	Scopes: []string{
+// 		"https://www.googleapis.com/auth/userinfo.email",
+// 		"https://www.googleapis.com/auth/userinfo.profile",
+// 	},
+// 	Endpoint: google.Endpoint,
+// }
 
 func init() {
+	godotenv.Load(".env")
+	jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 	if len(jwtSecret) == 0 {
 		fmt.Println("WARNING: JWT_SECRET environment variable not set. Using a default insecure key.")
-		jwtSecret = []byte("super-tajny-klucz-dla-projektu-studenckiego-zmien-to-koniecznie")
+		jwtSecret = []byte("bardzo-tajny-klucz-dla-projektu-studenckiego")
+	}
+	googleOauthConfig = &oauth2.Config{
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
+		RedirectURL:  os.Getenv("GOOGLE_REDIRECT_URL"),
+		Scopes: []string{
+			"https://www.googleapis.com/auth/userinfo.email",
+			"https://www.googleapis.com/auth/userinfo.profile",
+		},
+		Endpoint: google.Endpoint,
+	}
+	if googleOauthConfig.ClientID == "" || googleOauthConfig.ClientSecret == "" || googleOauthConfig.RedirectURL == "" {
+		log.Println("WARNING: Google OAuth environment variables not set. Google login will not work.")
+		log.Printf("GOOGLE_CLIENT_ID: %s", os.Getenv("GOOGLE_CLIENT_ID"))                  // Dodaj to
+		log.Printf("GOOGLE_CLIENT_SECRET: %s", os.Getenv("GOOGLE_CLIENT_SECRET"))          // Dodaj to
+		log.Printf("GOOGLE_REDIRECT_URL (from config): %s", googleOauthConfig.RedirectURL) // Dodaj to
+		log.Printf("GOOGLE_REDIRECT_URL (from env): %s", os.Getenv("GOOGLE_REDIRECT_URL")) // Dodaj to
 	}
 }
 
@@ -47,46 +86,38 @@ func generateJWT(userID uint) (string, error) {
 
 func RegisterUser(c echo.Context) error {
 	var newUser models.User
-	// Próba bindowania danych z żądania do struktury newUser
 	if err := c.Bind(&newUser); err != nil {
-		log.Printf("Błąd bindowania danych użytkownika: %v", err) // Log błędu bindowania
+		log.Printf("Błąd bindowania danych użytkownika: %v", err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid input"})
 	}
 
-	// Dodatkowe logi, aby sprawdzić, co zostało odebrane po bindowaniu
 	log.Printf("Odebrane dane rejestracji: Email=%s, FirstName=%s, LastName=%s, PasswordLength=%d",
 		newUser.Email, newUser.FirstName, newUser.LastName, len(newUser.Password))
 	log.Printf("Street: %s, City: %s, ZipCode: %s", newUser.Street, newUser.City, newUser.ZipCode)
 
-	// Walidacja podstawowych pól
 	if newUser.Email == "" || newUser.Password == "" || newUser.FirstName == "" || newUser.LastName == "" {
-		// Loguj, które konkretnie pole jest puste
 		log.Printf("Walidacja nieudana. Puste pola: Email=%t, Password=%t, FirstName=%t, LastName=%t",
 			newUser.Email == "", newUser.Password == "", newUser.FirstName == "", newUser.LastName == "")
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Email, password, first name, and last name are required"})
 	}
 
-	// Sprawdź, czy użytkownik o danym emailu już istnieje
 	_, err := models.FindUserByEmail(newUser.Email)
 	if err == nil {
-		log.Printf("Próba rejestracji istniejącego użytkownika: %s", newUser.Email) // Log
+		log.Printf("Próba rejestracji istniejącego użytkownika: %s", newUser.Email)
 		return c.JSON(http.StatusConflict, map[string]string{"message": "User with this email already exists"})
 	}
 
-	// Stwórz nowego użytkownika w bazie danych
 	if err := models.CreateUser(&newUser); err != nil {
-		log.Printf("Błąd tworzenia użytkownika w bazie danych: %v", err) // Log
+		log.Printf("Błąd tworzenia użytkownika w bazie danych: %v", err)
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to register user", "error": err.Error()})
 	}
-	log.Printf("ID nowo zarejestrowanego użytkownika: %d", newUser.ID) // <-- Dodaj ten log!
-	// Generuj JWT
+	log.Printf("ID nowo zarejestrowanego użytkownika: %d", newUser.ID)
 	token, err := generateJWT(newUser.ID)
 	if err != nil {
-		log.Printf("Błąd generowania JWT dla użytkownika %d: %v", newUser.ID, err) // Log
+		log.Printf("Błąd generowania JWT dla użytkownika %d: %v", newUser.ID, err)
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to generate authentication token"})
 	}
 
-	// Zwróć sukces
 	return c.JSON(http.StatusCreated, map[string]interface{}{
 		"message":    "User registered successfully",
 		"token":      token,
@@ -180,4 +211,89 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		c.Set("userID", claims.UserID)
 		return next(c)
 	}
+}
+
+func GoogleLogin(c echo.Context) error {
+	state := generateStateOauthCookie(c.Response())
+	url := googleOauthConfig.AuthCodeURL(state)
+	return c.Redirect(http.StatusTemporaryRedirect, url)
+}
+
+func GoogleCallback(c echo.Context) error {
+	state := c.FormValue("state")
+	code := c.FormValue("code")
+
+	oauthState, err := c.Cookie("oauthstate")
+	if err != nil || oauthState.Value != state {
+		log.Printf("Invalid OAuth state: %v", err)
+		return c.JSON(http.StatusUnauthorized, map[string]string{"message": "Invalid OAuth state"})
+	}
+	c.Response().Header().Del("Set-Cookie")
+
+	token, err := googleOauthConfig.Exchange(context.Background(), code)
+	if err != nil {
+		log.Printf("Code exchange failed: %s", err.Error())
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to exchange code for token"})
+	}
+
+	client := googleOauthConfig.Client(context.Background(), token)
+	peopleService, err := people.NewService(context.Background(), option.WithHTTPClient(client))
+	if err != nil {
+		log.Printf("Failed to create People service: %v", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to get user info"})
+	}
+
+	person, err := peopleService.People.Get("people/me").
+		PersonFields("names,emailAddresses").Do()
+	if err != nil {
+		log.Printf("Failed to get user info from Google: %v", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to get user info from Google"})
+	}
+
+	var email string
+	if len(person.EmailAddresses) > 0 {
+		email = person.EmailAddresses[0].Value
+	}
+
+	var firstName, lastName string
+	if len(person.Names) > 0 {
+		firstName = person.Names[0].GivenName
+		lastName = person.Names[0].FamilyName
+	}
+	googleID := person.ResourceName
+
+	if googleID == "" || email == "" {
+		log.Printf("Missing GoogleID or Email from Google profile. GoogleID: %s, Email: %s", googleID, email)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Could not retrieve full user profile from Google"})
+	}
+
+	user, err := models.FindOrCreateUserByGoogleID(googleID, email, firstName, lastName)
+	if err != nil {
+		log.Printf("Error finding or creating user by Google ID: %v", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to process user data"})
+	}
+
+	jwtToken, err := generateJWT(user.ID)
+	if err != nil {
+		log.Printf("Failed to generate JWT for Google user: %v", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to generate authentication token"})
+	}
+
+	redirectURL := fmt.Sprintf("http://localhost:3000/auth/callback?token=%s&email=%s&first_name=%s&last_name=%s",
+		jwtToken, user.Email, user.FirstName, user.LastName)
+	return c.Redirect(http.StatusTemporaryRedirect, redirectURL)
+}
+
+func generateStateOauthCookie(w http.ResponseWriter) string {
+	var expiration = time.Now().Add(20 * time.Minute)
+	b := make([]byte, 16)
+	_, err := rand.Read(b)
+	if err != nil {
+		log.Printf("Error generating random state: %v", err)
+		return "fallback_insecure_state"
+	}
+	state := fmt.Sprintf("%x", b)
+	cookie := http.Cookie{Name: "oauthstate", Value: state, Expires: expiration, HttpOnly: true}
+	http.SetCookie(w, &cookie)
+	return state
 }
