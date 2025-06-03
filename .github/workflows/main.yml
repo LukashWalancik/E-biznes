@@ -3,16 +3,14 @@ name: CI/CD BookStore App
 on:
   push:
     branches:
-      - main # Zmień na gałąź, na której pracujesz, np. 'master' lub 'develop'
-#test
+      - main
 env:
-  AZURE_CONTAINER_REGISTRY: ksiazkarnia.azurecr.io # Zmień na nazwę Twojego ACR
-  AZURE_CR_USERNAME: ${{ secrets.AZURE_CR_USERNAME }} # Zmienne środowiskowe z GitHub Secrets
-  AZURE_CR_PASSWORD: ${{ secrets.AZURE_CR_PASSWORD }} # Zmienne środowiskowe z GitHub Secrets
-  
-  # Next.js environment variables for the frontend build
-  NEXT_PUBLIC_BACKEND_URL: http://backend:1323 # To może być zmienione na publiczny URL w kroku deploymentu
-  NEXT_PUBLIC_BACKEND_URL_INTERNAL: http://backend:1323 # To samo
+  AZURE_CONTAINER_REGISTRY: ksiazkarnia.azurecr.io
+  AZURE_CR_USERNAME: ${{ secrets.AZURE_CR_USERNAME }} 
+  AZURE_CR_PASSWORD: ${{ secrets.AZURE_CR_PASSWORD }} 
+
+  NEXT_PUBLIC_BACKEND_URL: http://backend:1323 
+  NEXT_PUBLIC_BACKEND_URL_INTERNAL: http://backend:1323 
 
 jobs:
   build_and_push_docker:
@@ -33,12 +31,8 @@ jobs:
         run: |
           docker build ./server -t ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}
           docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}
-        # build context for backend is ./server, so Dockerfile is ./server/Dockerfile
 
       - name: Build and push frontend image
         run: |
           docker build ./client -t ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}
           docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}
-        # build context for frontend is ./client, so Dockerfile is ./client/Dockerfile
-        # Note: If your next.config.js has specific environment variables,
-        # you might need to pass them during the build, e.g., --build-arg VARIABLE=value
