@@ -6,14 +6,14 @@ on:
       - main
 env:
   AZURE_CONTAINER_REGISTRY: ksiazkarnia.azurecr.io
-  AZURE_CR_USERNAME: ${{ secrets.AZURE_CR_USERNAME }} 
-  AZURE_CR_PASSWORD: ${{ secrets.AZURE_CR_PASSWORD }} 
+  AZURE_CR_USERNAME: ${{ secrets.AZURE_CR_USERNAME }}  
+  AZURE_CR_PASSWORD: ${{ secrets.AZURE_CR_PASSWORD }}  
 
-  NEXT_PUBLIC_BACKEND_URL: http://backend:1323 
-  NEXT_PUBLIC_BACKEND_URL_INTERNAL: http://backend:1323 
+  NEXT_PUBLIC_BACKEND_URL: http://backend:1323  
+  NEXT_PUBLIC_BACKEND_URL_INTERNAL: http://backend:1323  
 
 jobs:
-  build_and_push_docker:
+  build_and_push_docker: # <-- To jest wcięte o 2 spacje
     runs-on: ubuntu-latest
 
     steps:
@@ -38,30 +38,31 @@ jobs:
         run: |
           docker build ./BookStore/client -t ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}
           docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}
-          docker tag ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.coSHA }} ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:latest
+          # TUTAJ MIALES github.coSHA - ZMIEN NA github.sha
+          docker tag ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }} ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:latest
           docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:latest
 
-deploy_to_azure:
+  deploy_to_azure: # <-- TO MUSI BYĆ WCIĘTE DOKŁADNIE TAK SAMO JAK build_and_push_docker
     runs-on: ubuntu-latest
-    needs: build_and_push_docker # To zadanie uruchomi się dopiero po zakończeniu budowania i wypychania obrazów
+    needs: build_and_push_docker
 
     steps:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} # Używamy Service Principal JSON
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy backend to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ksiazkarnia-backend # Nazwa Twojego App Service dla backendu
+          app-name: ksiazkarnia-backend
           slot-name: 'production'
-          images: '${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}' # Wdrażamy konkretny obraz po SHA
+          images: '${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}'
 
       - name: Deploy frontend to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ksiazkarnia-frontend # Nazwa Twojego App Service dla frontendu
+          app-name: ksiazkarnia-frontend
           slot-name: 'production'
           images: '${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}'
           configuration-settings: |
