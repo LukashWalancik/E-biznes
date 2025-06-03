@@ -1,20 +1,21 @@
 // client/app/login/page.tsx
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react'; // Dodajemy import Suspense
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '../context/AuthContext';
 
-export default function LoginPage() {
+// Wydzielamy logikę używającą useSearchParams do osobnego komponentu
+function LoginPageContent() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [message, setMessage] = useState('');
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // To jest problematyczne
   const { isAuthenticated, login } = useAuth();
 
   useEffect(() => {
@@ -31,11 +32,11 @@ export default function LoginPage() {
     const queryMessage = searchParams.get('message');
 
     if (queryMessage) {
-        setMessage(queryMessage);
+      setMessage(queryMessage);
     }
 
     if (token && email && firstName && lastName) {
-      login(token, `${firstName} ${lastName}`, email); 
+      login(token, `${firstName} ${lastName}`, email);
       setMessage('Logowanie przez Google udane! Witaj ponownie.');
       router.push('/');
     } else if (token && !email) {
@@ -71,7 +72,7 @@ export default function LoginPage() {
 
       if (response.ok) {
         setMessage('Logowanie udane! Witaj ponownie.');
-        login(data.token, `${data.first_name} ${data.last_name}`, data.email); 
+        login(data.token, `${data.first_name} ${data.last_name}`, data.email);
 
         router.push('/');
       } else {
@@ -157,5 +158,14 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+// Główny eksport strony, który teraz otacza LoginPageContent w Suspense
+export default function LoginPageWrapper() {
+  return (
+    <Suspense fallback={<div>Ładowanie strony logowania...</div>}> {/* Dodajemy Suspense */}
+      <LoginPageContent />
+    </Suspense>
   );
 }

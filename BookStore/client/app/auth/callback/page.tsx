@@ -1,10 +1,11 @@
 // client/app/auth/callback/page.tsx
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react'; // Dodajemy import Suspense
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function AuthCallbackPage() {
+// Wydzielamy logikę używającą useSearchParams do osobnego komponentu
+function AuthCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -17,9 +18,9 @@ export default function AuthCallbackPage() {
     if (token) {
       localStorage.setItem('authToken', token);
       localStorage.setItem('userEmail', email || '');
-      
+
       const fullUserName = `${firstName || ''} ${lastName || ''}`.trim();
-      localStorage.setItem('userName', fullUserName); 
+      localStorage.setItem('userName', fullUserName);
 
       router.push('/');
     } else {
@@ -33,5 +34,16 @@ export default function AuthCallbackPage() {
       <h2>Logowanie w toku...</h2>
       <p>Trwa przekierowanie...</p>
     </div>
+  );
+}
+
+// Główny eksport strony, który teraz otacza AuthCallbackContent w Suspense
+export default function AuthCallbackPage() {
+  return (
+    // <Suspense> z fallbackiem, który pokaże się, dopóki komponent AuthCallbackContent
+    // nie będzie mógł być w pełni wyrenderowany (np. gdy useSearchParams będzie dostępne)
+    <Suspense fallback={<div>Ładowanie danych uwierzytelniających...</div>}>
+      <AuthCallbackContent />
+    </Suspense>
   );
 }
