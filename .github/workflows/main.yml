@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main # Zmień na gałąź, na której pracujesz, np. 'master' lub 'develop'
-
+#test
 env:
   AZURE_CONTAINER_REGISTRY: ksiazkarnia.azurecr.io # Zmień na nazwę Twojego ACR
   AZURE_CR_USERNAME: ${{ secrets.AZURE_CR_USERNAME }} # Zmienne środowiskowe z GitHub Secrets
