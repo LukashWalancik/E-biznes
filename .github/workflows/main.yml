@@ -6,7 +6,7 @@ on:
       - main # Zmień na gałąź, na której pracujesz, np. 'master' lub 'develop'
 
 env:
-  AZURE_CONTAINER_REGISTRY: ksiazkarniacr.azurecr.io # Zmień na nazwę Twojego ACR
+  AZURE_CONTAINER_REGISTRY: ksiazkarnia.azurecr.io # Zmień na nazwę Twojego ACR
   AZURE_CR_USERNAME: ${{ secrets.AZURE_CR_USERNAME }} # Zmienne środowiskowe z GitHub Secrets
   AZURE_CR_PASSWORD: ${{ secrets.AZURE_CR_PASSWORD }} # Zmienne środowiskowe z GitHub Secrets
   
