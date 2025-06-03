@@ -82,3 +82,12 @@ https://hub.docker.com/repository/docker/wookashwalancik/zadanie1/general
 ✅ 5.0 zapisywanie danych logowania OAuth2 po stronie serwera [Commit](https://github.com/LukashWalancik/E-biznes/commit/c7ec2105d7a57928b9f4240648050be8c307d0b3)  
 ### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/BookStore)  
 ### ![Demo](Dema/E-Biznes_LLM.mp4)
+
+## Zadanie 10 Chmura
+✅ 3.0 Należy stworzyć odpowiednie instancje po stronie chmury na dockerze [Commit](https://github.com/LukashWalancik/E-biznes/commit/fa48b2c1a7e5f7c4eb7e9419d558a7d5ea77867b)  
+✅ 3.5 Stworzyć odpowiedni pipeline w Github Actions do budowania aplikacji (np. via fatjar) [Commit](https://github.com/LukashWalancik/E-biznes/commit/fa48b2c1a7e5f7c4eb7e9419d558a7d5ea77867b)  
+✅ 4.0 Dodać notyfikację mailową o zbudowaniu aplikacji [Commit](https://github.com/LukashWalancik/E-biznes/commit/fa48b2c1a7e5f7c4eb7e9419d558a7d5ea77867b)  
+✅ 4.5 Dodać krok z deploymentem aplikacji serwerowej oraz klienckiej na chmurę [Commit](https://github.com/LukashWalancik/E-biznes/commit/fa48b2c1a7e5f7c4eb7e9419d558a7d5ea77867b)  
+✅ 5.0 Dodać uruchomienie regresyjnych testów automatycznych (funkcjonalnych) jako krok w Actions [Commit](https://github.com/LukashWalancik/E-biznes/commit/fa48b2c1a7e5f7c4eb7e9419d558a7d5ea77867b)   
+### [Kod](https://github.com/LukashWalancik/E-biznes/tree/main/BookStore)  
+### ![Demo](Dema/E-Biznes_Chmura.mp4)
