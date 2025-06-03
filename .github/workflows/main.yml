@@ -91,7 +91,7 @@ jobs:
         # ale to wymagałoby uruchomienia kontenera w Actions.
         # Dla najprostszego przypadku, zostawiamy go tak, jakby testował istniejącą aplikację.
         run: |
-          cd ./BookStore/server # Przejdź do katalogu z plikiem testowym
+          cd ./BookStore/server/tests # Przejdź do katalogu z plikiem testowym
           go test ./... -v # Uruchom wszystkie testy w tym katalogu i podkatalogach
         env:
           BACKEND_URL: ${{ secrets.BACKEND_PUBLIC_URL }} # Test odczyta URL z tego sekretu
