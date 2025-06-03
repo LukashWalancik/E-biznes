@@ -29,10 +29,10 @@ jobs:
 
       - name: Build and push backend image
         run: |
-          docker build ./server -t ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}
+          docker build ./BookStore/server -t ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}
           docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}
 
       - name: Build and push frontend image
         run: |
-          docker build ./client -t ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}
+          docker build ./BookStore/client -t ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}
           docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}

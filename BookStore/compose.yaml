@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./server # Katalog z Dockerfile backendu
+    ports:
+      - "1323:1323"
+    environment:
+      PORT: 1323
+    networks:
+      - app-network
+
+  frontend:
+    build: ./client
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_BACKEND_URL: http://backend:1323 # Backend dostępny jako "backend" w sieci Docker
+      NEXT_PUBLIC_BACKEND_URL_INTERNAL: http://backend:1323 # To samo dla rewrites
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
