@@ -3,17 +3,15 @@ name: CI/CD BookStore App
 on:
   push:
     branches:
-      - main # Zmień na gałąź, na której pracujesz, np. 'master' lub 'develop'
+      - main
 
 env:
-  AZURE_CONTAINER_REGISTRY: ksiazkarnia.azurecr.io # Upewnij się, że to jest Twoja poprawna nazwa
+  AZURE_CONTAINER_REGISTRY: ksiazkarnia.azurecr.io
   AZURE_CR_USERNAME: ${{ secrets.AZURE_CR_USERNAME }}
   AZURE_CR_PASSWORD: ${{ secrets.AZURE_CR_PASSWORD }}
   
-  # Next.js environment variables for the frontend build
-  # Używamy placeholderów, które zostaną nadpisane w kroku deploymentu
-  NEXT_PUBLIC_BACKEND_URL: http://backend:1323 # To będzie nadpisane
-  NEXT_PUBLIC_BACKEND_URL_INTERNAL: http://backend:1323 # To będzie nadpisane
+  NEXT_PUBLIC_BACKEND_URL: http://backend:1323
+  NEXT_PUBLIC_BACKEND_URL_INTERNAL: http://backend:1323
 
 jobs:
   build_and_push_docker:
@@ -44,54 +42,51 @@ jobs:
           docker tag ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }} ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:latest
           docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:latest
 
-  # To zadanie zostało zmodyfikowane tak, aby pominąć rzeczywisty deployment na Azure.
-  # Nadal wymaga poprawnego Azure Login, jeśli testy będą w przyszłości używać zasobów Azure.
-  # Ale na potrzeby "mockowania" deploymentu, możesz go pominąć, o ile testy nie potrzebują *działającej* aplikacji na Azure.
-  mock_deploy_and_run_tests: # Zmieniona nazwa zadania
+deploy:
+  runs-on: ubuntu-latest
+  needs: build_and_push_docker
+
+  steps:
+    - name: Log in to Azure
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.AZURE_CONTAINER_REGISTRY }}
+        username: ${{ env.AZURE_CR_USERNAME }}
+        password: ${{ env.AZURE_CR_PASSWORD }}
+
+    - name: Deploy backend to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ksiazkarnia-backend
+        slot-name: 'production'
+        images: '${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}'
+
+    - name: Deploy frontend to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ksiazkarnia-frontend
+        slot-name: 'production'
+        images: '${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}'
+        configuration-settings: |
+          NEXT_PUBLIC_BACKEND_URL=${{ secrets.BACKEND_PUBLIC_URL }}
+          NEXT_PUBLIC_BACKEND_URL_INTERNAL=${{ secrets.BACKEND_PUBLIC_URL }}
+
+  run_tests:
     runs-on: ubuntu-latest
-    needs: build_and_push_docker # To zadanie uruchomi się dopiero po zakończeniu budowania i wypychania obrazów
+    needs: deploy
 
     steps:
-      # Pomiń logowanie do Azure i kroki deploymentu, jeśli chcesz *całkowicie* zamokować deployment.
-      # Jeśli chcesz, aby logowanie do Azure się odbyło (np. w przypadku, gdy testy potrzebują dostępu do innych zasobów Azure),
-      # pozostaw poniższy krok Azure Login. W tym przypadku usuwam go dla jasności "mockowania" deploymentu.
-      # - name: Azure Login
-      #   uses: azure/login@v1
-      #   with:
-      #     client-id: '' # Uzupełnij, jeśli używasz tej opcji
-      #     tenant-id: '' # Uzupełnij, jeśli używasz tej opcji
-      #     subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      #     username: ${{ secrets.AZURE_USERNAME }}
-      #     password: ${{ secrets.AZURE_PASSWORD }}
-      #     auth-type: 'USER_ACCOUNT'
-
-      # Te kroki są "zamokowaniem" deploymentu - nic się nie dzieje, ale workflow się nie zatrzymuje.
-      - name: Simulate Backend Deployment
-        run: echo "Simulating backend deployment to Azure App Service..."
-
-      - name: Simulate Frontend Deployment
-        run: echo "Simulating frontend deployment to Azure App Service..."
-
-      - name: Wait for simulated deployment to settle (optional)
-        run: sleep 10 # Odczekaj chwilę, symulując czas deploymentu
-
-      # --- Testy regresyjne ---
-      - name: Checkout repository (for tests)
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Go (for tests)
+      - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22' # Upewnij się, że to wersja Go, której używasz
+          go-version: '1.22'
 
       - name: Run Go API Tests
-        # UWAGA: Ten test będzie działał tylko, jeśli masz publicznie dostępny backend.
-        # Jeśli go "zamokowałeś", ten test zawiedzie, bo nie znajdzie aplikacji.
-        # Możesz zmienić to tak, aby testować lokalnie zbudowany kontener,
-        # ale to wymagałoby uruchomienia kontenera w Actions.
-        # Dla najprostszego przypadku, zostawiamy go tak, jakby testował istniejącą aplikację.
         run: |
-          cd ./BookStore/server/tests # Przejdź do katalogu z plikiem testowym
-          go test ./... -v # Uruchom wszystkie testy w tym katalogu i podkatalogach
+          cd ./BookStore/server/tests
+          go test ./... -v
         env:
-          BACKEND_URL: ${{ secrets.BACKEND_PUBLIC_URL }} # Test odczyta URL z tego sekretu
+          BACKEND_URL: ${{ secrets.BACKEND_PUBLIC_URL }}
