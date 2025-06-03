@@ -55,21 +55,18 @@ jobs:
           password: ${{ env.AZURE_CR_PASSWORD }}
 
       - name: Deploy backend to Azure App Service
-        uses: azure/webapps-deploy@v2
+        uses: docker/login-action@v3
         with:
-          app-name: ksiazkarnia-backend
-          slot-name: 'production'
-          images: '${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-backend:${{ github.sha }}'
+          registry: ${{ env.AZURE_CONTAINER_REGISTRY }}
+          username: ${{ env.AZURE_CR_USERNAME }}
+          password: ${{ env.AZURE_CR_PASSWORD }}
 
       - name: Deploy frontend to Azure App Service
-        uses: azure/webapps-deploy@v2
+        uses: docker/login-action@v3
         with:
-          app-name: ksiazkarnia-frontend
-          slot-name: 'production'
-          images: '${{ env.AZURE_CONTAINER_REGISTRY }}/bookstore-frontend:${{ github.sha }}'
-          configuration-settings: |
-            NEXT_PUBLIC_BACKEND_URL=${{ secrets.BACKEND_PUBLIC_URL }}
-            NEXT_PUBLIC_BACKEND_URL_INTERNAL=${{ secrets.BACKEND_PUBLIC_URL }}
+          registry: ${{ env.AZURE_CONTAINER_REGISTRY }}
+          username: ${{ env.AZURE_CR_USERNAME }}
+          password: ${{ env.AZURE_CR_PASSWORD }}
 
   run_tests:
     runs-on: ubuntu-latest
