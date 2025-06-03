@@ -50,8 +50,12 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
+          client-id: ''
+          tenant-id: ''
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
+          auth-type: 'USER_ACCOUNT' # <-- TO JEST KLUCZOWE
 
       - name: Deploy backend to Azure App Service
         uses: azure/webapps-deploy@v2
