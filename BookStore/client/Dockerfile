@@ -30,7 +30,7 @@ COPY --from=builder /app/.next/standalone ./
 # Kopiujemy katalog public do /app/public
 # Next.js standalone nie kopiuje katalogu public, więc jest on wymagany osobno.
 COPY --from=builder /app/public ./public
-
+COPY --from=builder /app/.next/static ./_next/static
 # Komenda uruchamiająca aplikację Next.js
 # server.js jest teraz w katalogu głównym /app
 CMD ["node", "./server.js"]
